@@ -1,0 +1,119 @@
+<!-- Homework Help Section -->
+<section class="homework-help">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Quick Homework Help</h2>
+            <p class="section-subtitle">Get answers to your questions in minutes, 24/7</p>
+        </div>
+        
+        <div class="homework-container">
+            <div class="homework-main">
+                <div class="homework-form">
+                    <h3>Ask Your Question</h3>
+                    <form id="homework-form">
+                        <div class="form-row">
+                            <select class="homework-subject">
+                                <option>Select Subject</option>
+                                <option>Mathematics</option>
+                                <option>Science</option>
+                                <option>English</option>
+                                <option>History</option>
+                                <option>Computer Science</option>
+                                <option>Other</option>
+                            </select>
+                            <select class="homework-grade">
+                                <option>Grade Level</option>
+                                <option>Elementary</option>
+                                <option>Middle School</option>
+                                <option>High School</option>
+                                <option>College</option>
+                            </select>
+                        </div>
+                        
+                        <textarea placeholder="Type your question here... Be as specific as possible" rows="5"></textarea>
+                        
+                        <div class="upload-area" id="upload-area">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Drag & drop files or click to upload</p>
+                            <span class="upload-info">Supports: Images, PDFs, Documents (Max 10MB)</span>
+                            <input type="file" id="file-upload" multiple accept=".jpg,.jpeg,.png,.pdf,.doc,.docx" hidden>
+                        </div>
+                        
+                        <div class="urgency-selector">
+                            <label>How urgent is this?</label>
+                            <div class="urgency-options">
+                                <label class="radio-option">
+                                    <input type="radio" name="urgency" value="asap">
+                                    <span>ASAP (15 mins)</span>
+                                    <span class="price">+$5</span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="urgency" value="today" checked>
+                                    <span>Today (2 hours)</span>
+                                    <span class="price">Free</span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="urgency" value="tomorrow">
+                                    <span>Tomorrow</span>
+                                    <span class="price">Free</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn-submit-question">
+                            <i class="fas fa-paper-plane"></i> Submit Question
+                        </button>
+                    </form>
+                </div>
+                
+                <div class="homework-sidebar">
+                    <div class="homework-stats">
+                        <h3>Homework Help Stats</h3>
+                        <div class="stat-item">
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <span class="stat-value">15 min</span>
+                                <span class="stat-label">Average Response Time</span>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <span class="stat-value">98%</span>
+                                <span class="stat-label">Questions Answered</span>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-users"></i>
+                            <div>
+                                <span class="stat-value">500+</span>
+                                <span class="stat-label">Tutors Available Now</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="recent-questions">
+                        <h3>Recent Questions Answered</h3>
+                        <div class="question-list">
+                            <div class="question-item">
+                                <span class="subject-tag math">Math</span>
+                                <p>How do I solve quadratic equations?</p>
+                                <span class="time-ago">Answered 5 mins ago</span>
+                            </div>
+                            <div class="question-item">
+                                <span class="subject-tag science">Science</span>
+                                <p>What is photosynthesis?</p>
+                                <span class="time-ago">Answered 12 mins ago</span>
+                            </div>
+                            <div class="question-item">
+                                <span class="subject-tag english">English</span>
+                                <p>Essay structure help needed</p>
+                                <span class="time-ago">Answered 18 mins ago</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

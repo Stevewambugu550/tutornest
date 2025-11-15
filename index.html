@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TutorNest - Professional Online Tutoring Platform | Expert Tutors Available 24/7</title>
+    <meta name="description" content="Connect with certified tutors for personalized 1-on-1 lessons. Free trial session, 24/7 support, and guaranteed results.">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/enhanced-styles.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-graduation-cap logo-icon"></i>
+                <span class="logo-text">TutorNest</span>
+            </div>
+            
+            <div class="nav-menu" id="nav-menu">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#subjects" class="nav-link">Subjects</a>
+                <a href="instant-classes.html" class="nav-link instant-badge">Instant Classes <span class="new-badge">NEW</span></a>
+                <a href="chat-learn.html" class="nav-link">Chat & Learn</a>
+                <a href="#how-it-works" class="nav-link">How It Works</a>
+                <a href="#tutors" class="nav-link">Find Tutors</a>
+                <a href="#pricing" class="nav-link">Pricing</a>
+                <div class="nav-buttons-mobile">
+                    <button class="btn-login-mobile">Login</button>
+                    <button class="btn-primary-mobile">Get Started</button>
+                </div>
+            </div>
+            
+            <div class="nav-buttons">
+                <div class="language-selector">
+                    <i class="fas fa-globe"></i>
+                    <select id="language">
+                        <option value="en">EN</option>
+                        <option value="es">ES</option>
+                        <option value="fr">FR</option>
+                        <option value="zh">中文</option>
+                    </select>
+                </div>
+                <button class="btn-login">Login</button>
+                <button class="btn-trial">Start Free Trial</button>
+            </div>
+            
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="trust-badges">
+                    <span class="badge"><i class="fas fa-shield-alt"></i> SSL Secured</span>
+                    <span class="badge"><i class="fas fa-check-circle"></i> Verified Tutors</span>
+                    <span class="badge"><i class="fas fa-star"></i> 4.9/5 Rating</span>
+                </div>
+                
+                <h1 class="hero-title">
+                    Find Your Perfect Tutor in <br>
+                    <span class="gradient-text typed-text" id="typed-subject">Mathematics</span>
+                </h1>
+                <p class="hero-description">
+                    Connect with 50,000+ certified tutors for personalized 1-on-1 lessons. 
+                    <strong>First session FREE!</strong> No credit card required.
+                </p>
+                <!-- Advanced Search Section -->
+                <div class="advanced-search">
+                    <div class="search-tabs">
+                        <button class="search-tab active" data-tab="subject">By Subject</button>
+                        <button class="search-tab" data-tab="tutor">By Tutor Name</button>
+                        <button class="search-tab" data-tab="school">By School Level</button>
+                    </div>
+                    
+                    <div class="search-content active" id="subject-search">
+                        <div class="search-row">
+                            <select class="search-select">
+                                <option>Select Subject</option>
+                                <option>Mathematics</option>
+                                <option>Science</option>
+                                <option>English</option>
+                                <option>Computer Science</option>
+                                <option>Languages</option>
+                            </select>
+                            <select class="search-select">
+                                <option>Grade Level</option>
+                                <option>Elementary</option>
+                                <option>Middle School</option>
+                                <option>High School</option>
+                                <option>College</option>
+                                <option>Adult</option>
+                            </select>
+                            <button class="search-btn-primary">
+                                <i class="fas fa-search"></i> Find Tutors
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">50,000+</span>
+                        <span class="stat-label">Expert Tutors</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">300+</span>
+                        <span class="stat-label">Subjects</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">4.9/5</span>
+                        <span class="stat-label">Average Rating</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="hero-image-container">
+                    <div class="floating-card card-1">
+                        <i class="fas fa-calculator"></i>
+                        <span>Math</span>
+                    </div>
+                    <div class="floating-card card-2">
+                        <i class="fas fa-flask"></i>
+                        <span>Science</span>
+                    </div>
+                    <div class="floating-card card-3">
+                        <i class="fas fa-language"></i>
+                        <span>Languages</span>
+                    </div>
+                    <div class="main-illustration">
+                        <div class="illustration-circle">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- New Features Section -->
+    <section class="new-features">
+        <div class="container">
+            <div class="features-banner">
+                <div class="feature-card instant">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Instant Classes</h3>
+                    <p>Get help in under 60 seconds! No scheduling needed.</p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check"></i> Available 24/7</li>
+                        <li><i class="fas fa-check"></i> Emergency homework help</li>
+                        <li><i class="fas fa-check"></i> Pay per minute</li>
+                    </ul>
+                    <a href="instant-classes.html" class="feature-btn">
+                        Try Instant Classes <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                
+                <div class="feature-card chat">
+                    <div class="feature-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3>Chat & Learn</h3>
+                    <p>Real-time messaging with video, voice, and whiteboard!</p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check"></i> Text, voice & video chat</li>
+                        <li><i class="fas fa-check"></i> Interactive whiteboard</li>
+                        <li><i class="fas fa-check"></i> File sharing & AI assistant</li>
+                    </ul>
+                    <a href="chat-learn.html" class="feature-btn">
+                        Start Chatting <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular Subjects -->
+    <section class="subjects" id="subjects">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Popular Subjects</h2>
+                <p class="section-subtitle">Choose from hundreds of subjects across all grade levels</p>
+            </div>
+            
+            <div class="subjects-grid">
+                <div class="subject-card">
+                    <div class="subject-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h3>Mathematics</h3>
+                    <ul class="subject-list">
+                        <li>Algebra</li>
+                        <li>Geometry</li>
+                        <li>Calculus</li>
+                        <li>Statistics</li>
+                    </ul>
+                    <a href="#" class="subject-link">Explore <i class="fas fa-arrow-right"></i></a>
+                </div>
+                
+                <div class="subject-card">
+                    <div class="subject-icon">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <h3>Science</h3>
+                    <ul class="subject-list">
+                        <li>Biology</li>
+                        <li>Chemistry</li>
+                        <li>Physics</li>
+                        <li>Environmental Science</li>
+                    </ul>
+                    <a href="#" class="subject-link">Explore <i class="fas fa-arrow-right"></i></a>
+                </div>
+                
+                <div class="subject-card">
+                    <div class="subject-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3>English</h3>
+                    <ul class="subject-list">
+                        <li>Reading Comprehension</li>
+                        <li>Writing</li>
+                        <li>Literature</li>
+                        <li>Grammar</li>
+                    </ul>
+                    <a href="#" class="subject-link">Explore <i class="fas fa-arrow-right"></i></a>
+                </div>
+                
+                <div class="subject-card">
+                    <div class="subject-icon">
+                        <i class="fas fa-language"></i>
+                    </div>
+                    <h3>Languages</h3>
+                    <ul class="subject-list">
+                        <li>Spanish</li>
+                        <li>French</li>
+                        <li>Mandarin</li>
+                        <li>German</li>
+                    </ul>
+                    <a href="#" class="subject-link">Explore <i class="fas fa-arrow-right"></i></a>
+                </div>
+                
+                <div class="subject-card">
+                    <div class="subject-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3>Computer Science</h3>
+                    <ul class="subject-list">
+                        <li>Programming</li>
+                        <li>Web Development</li>
+                        <li>Data Science</li>
+                        <li>AI/Machine Learning</li>
+                    </ul>
+                    <a href="#" class="subject-link">Explore <i class="fas fa-arrow-right"></i></a>
+                </div>
+                
+                <div class="subject-card">
+                    <div class="subject-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>Test Prep</h3>
+                    <ul class="subject-list">
+                        <li>SAT/ACT</li>
+                        <li>GRE/GMAT</li>
+                        <li>TOEFL/IELTS</li>
+                        <li>AP Exams</li>
+                    </ul>
+                    <a href="#" class="subject-link">Explore <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">How TutorNest Works</h2>
+                <p class="section-subtitle">Get started in minutes with our simple process</p>
+            </div>
+            
+            <div class="steps-container">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3>Find Your Tutor</h3>
+                    <p>Search by subject, grade level, or specific needs. Browse profiles, ratings, and reviews.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h3>Schedule Sessions</h3>
+                    <p>Book sessions at times that work for you. Choose between online or in-person tutoring.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <h3>Start Learning</h3>
+                    <p>Connect via our interactive online classroom or meet in person. Track progress and achieve goals.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Tutors -->
+    <section class="tutors" id="tutors">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Meet Our Top Tutors</h2>
+                <p class="section-subtitle">Learn from experienced educators with proven track records</p>
+            </div>
+            
+            <div class="tutors-grid">
+                <div class="tutor-card">
+                    <div class="tutor-header">
+                        <img src="https://i.pravatar.cc/150?img=1" alt="Tutor" class="tutor-avatar">
+                        <div class="tutor-badge">Top Rated</div>
+                    </div>
+                    <div class="tutor-info">
+                        <h3>Dr. Sarah Johnson</h3>
+                        <p class="tutor-subject">Mathematics & Physics</p>
+                        <div class="tutor-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span>5.0 (324 reviews)</span>
+                        </div>
+                        <p class="tutor-bio">PhD in Mathematics with 10+ years teaching experience. Specializes in AP Calculus and college-level math.</p>
+                        <div class="tutor-stats">
+                            <span><i class="fas fa-user-graduate"></i> 500+ students</span>
+                            <span><i class="fas fa-clock"></i> 2000+ hours</span>
+                        </div>
+                        <div class="tutor-price">
+                            <span class="price">$65/hour</span>
+                            <button class="btn-book">Book Now</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tutor-card">
+                    <div class="tutor-header">
+                        <img src="https://i.pravatar.cc/150?img=3" alt="Tutor" class="tutor-avatar">
+                        <div class="tutor-badge">Expert</div>
+                    </div>
+                    <div class="tutor-info">
+                        <h3>Michael Chen</h3>
+                        <p class="tutor-subject">Computer Science</p>
+                        <div class="tutor-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span>4.9 (412 reviews)</span>
+                        </div>
+                        <p class="tutor-bio">Software engineer at Google. Expert in Python, Java, and web development. Great with beginners!</p>
+                        <div class="tutor-stats">
+                            <span><i class="fas fa-user-graduate"></i> 350+ students</span>
+                            <span><i class="fas fa-clock"></i> 1500+ hours</span>
+                        </div>
+                        <div class="tutor-price">
+                            <span class="price">$75/hour</span>
+                            <button class="btn-book">Book Now</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tutor-card">
+                    <div class="tutor-header">
+                        <img src="https://i.pravatar.cc/150?img=5" alt="Tutor" class="tutor-avatar">
+                        <div class="tutor-badge">Popular</div>
+                    </div>
+                    <div class="tutor-info">
+                        <h3>Emily Rodriguez</h3>
+                        <p class="tutor-subject">English & Writing</p>
+                        <div class="tutor-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span>5.0 (289 reviews)</span>
+                        </div>
+                        <p class="tutor-bio">Published author and writing coach. Helps students excel in essays, creative writing, and SAT prep.</p>
+                        <div class="tutor-stats">
+                            <span><i class="fas fa-user-graduate"></i> 400+ students</span>
+                            <span><i class="fas fa-clock"></i> 1800+ hours</span>
+                        </div>
+                        <div class="tutor-price">
+                            <span class="price">$55/hour</span>
+                            <button class="btn-book">Book Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tutors-cta">
+                <button class="btn-secondary">View All Tutors</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Plans -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Choose Your Plan</h2>
+                <p class="section-subtitle">Flexible pricing options for every learning need</p>
+            </div>
+            
+            <div class="pricing-toggle">
+                <span class="toggle-label">Pay As You Go</span>
+                <label class="switch">
+                    <input type="checkbox" id="pricing-toggle">
+                    <span class="slider"></span>
+                </label>
+                <span class="toggle-label">Monthly Plans <span class="save-badge">Save 20%</span></span>
+            </div>
+            
+            <div class="pricing-cards">
+                <div class="pricing-card">
+                    <div class="plan-header">
+                        <h3>Basic</h3>
+                        <div class="plan-price">
+                            <span class="currency">$</span>
+                            <span class="amount">29</span>
+                            <span class="period">/hour</span>
+                        </div>
+                    </div>
+                    <ul class="plan-features">
+                        <li><i class="fas fa-check"></i> 1-on-1 Online Tutoring</li>
+                        <li><i class="fas fa-check"></i> Basic Learning Materials</li>
+                        <li><i class="fas fa-check"></i> Session Recordings</li>
+                        <li><i class="fas fa-check"></i> Email Support</li>
+                        <li class="disabled"><i class="fas fa-times"></i> Priority Scheduling</li>
+                        <li class="disabled"><i class="fas fa-times"></i> Progress Reports</li>
+                    </ul>
+                    <button class="btn-plan">Get Started</button>
+                </div>
+                
+                <div class="pricing-card featured">
+                    <div class="popular-badge">Most Popular</div>
+                    <div class="plan-header">
+                        <h3>Premium</h3>
+                        <div class="plan-price">
+                            <span class="currency">$</span>
+                            <span class="amount">49</span>
+                            <span class="period">/hour</span>
+                        </div>
+                    </div>
+                    <ul class="plan-features">
+                        <li><i class="fas fa-check"></i> Everything in Basic</li>
+                        <li><i class="fas fa-check"></i> Advanced Learning Materials</li>
+                        <li><i class="fas fa-check"></i> Priority Scheduling</li>
+                        <li><i class="fas fa-check"></i> Weekly Progress Reports</li>
+                        <li><i class="fas fa-check"></i> 24/7 Support</li>
+                        <li><i class="fas fa-check"></i> Free Assessment Test</li>
+                    </ul>
+                    <button class="btn-plan btn-featured">Get Started</button>
+                </div>
+                
+                <div class="pricing-card">
+                    <div class="plan-header">
+                        <h3>Elite</h3>
+                        <div class="plan-price">
+                            <span class="currency">$</span>
+                            <span class="amount">79</span>
+                            <span class="period">/hour</span>
+                        </div>
+                    </div>
+                    <ul class="plan-features">
+                        <li><i class="fas fa-check"></i> Everything in Premium</li>
+                        <li><i class="fas fa-check"></i> Top-Rated Tutors Only</li>
+                        <li><i class="fas fa-check"></i> Custom Learning Plan</li>
+                        <li><i class="fas fa-check"></i> Parent Dashboard</li>
+                        <li><i class="fas fa-check"></i> College Counseling</li>
+                        <li><i class="fas fa-check"></i> Guaranteed Results</li>
+                    </ul>
+                    <button class="btn-plan">Get Started</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Success Stories</h2>
+                <p class="section-subtitle">See how TutorNest has transformed students' lives</p>
+            </div>
+            
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="quote-icon">
+                        <i class="fas fa-quote-left"></i>
+                    </div>
+                    <p class="testimonial-text">
+                        "My daughter went from struggling with math to getting an A in her AP Calculus class. Her tutor was patient, knowledgeable, and made learning fun!"
+                    </p>
+                    <div class="testimonial-author">
+                        <img src="https://i.pravatar.cc/150?img=10" alt="Parent">
+                        <div>
+                            <h4>Jennifer Martinez</h4>
+                            <span>Parent</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="quote-icon">
+                        <i class="fas fa-quote-left"></i>
+                    </div>
+                    <p class="testimonial-text">
+                        "TutorNest helped me improve my SAT score by 200 points! The personalized study plan and practice tests were exactly what I needed."
+                    </p>
+                    <div class="testimonial-author">
+                        <img src="https://i.pravatar.cc/150?img=15" alt="Student">
+                        <div>
+                            <h4>David Kim</h4>
+                            <span>High School Senior</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="quote-icon">
+                        <i class="fas fa-quote-left"></i>
+                    </div>
+                    <p class="testimonial-text">
+                        "As a working parent, the flexibility of online tutoring has been a game-changer. My son loves his tutor and looks forward to every session!"
+                    </p>
+                    <div class="testimonial-author">
+                        <img src="https://i.pravatar.cc/150?img=20" alt="Parent">
+                        <div>
+                            <h4>Robert Thompson</h4>
+                            <span>Parent</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Start Your Learning Journey?</h2>
+                <p>Join thousands of students achieving their academic goals with TutorNest</p>
+                <div class="cta-buttons">
+                    <button class="btn-cta-primary">Find Your Tutor</button>
+                    <button class="btn-cta-secondary">
+                        <i class="fas fa-play-circle"></i>
+                        Watch How It Works
+                    </button>
+                </div>
+                <p class="cta-note">
+                    <i class="fas fa-check-circle"></i>
+                    First session satisfaction guarantee
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>TutorNest</span>
+                    </div>
+                    <p>Empowering students worldwide with personalized tutoring solutions.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Subjects</h4>
+                    <ul>
+                        <li><a href="#">Mathematics</a></li>
+                        <li><a href="#">Science</a></li>
+                        <li><a href="#">English</a></li>
+                        <li><a href="#">Languages</a></li>
+                        <li><a href="#">Test Prep</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">How It Works</a></li>
+                        <li><a href="#">Become a Tutor</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Safety</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Get the App</h4>
+                    <p>Learn on the go with our mobile app</p>
+                    <div class="app-buttons">
+                        <a href="#" class="app-btn">
+                            <i class="fab fa-apple"></i>
+                            <div>
+                                <span>Download on the</span>
+                                <strong>App Store</strong>
+                            </div>
+                        </a>
+                        <a href="#" class="app-btn">
+                            <i class="fab fa-google-play"></i>
+                            <div>
+                                <span>Get it on</span>
+                                <strong>Google Play</strong>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 TutorNest. All rights reserved.</p>
+                <div class="payment-methods">
+                    <i class="fab fa-cc-visa"></i>
+                    <i class="fab fa-cc-mastercard"></i>
+                    <i class="fab fa-cc-amex"></i>
+                    <i class="fab fa-cc-paypal"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/api-config.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/enhanced-main.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

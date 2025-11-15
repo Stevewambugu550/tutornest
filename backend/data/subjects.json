@@ -1,0 +1,272 @@
+{
+  "subjects": [
+    {
+      "category": "Mathematics",
+      "icon": "fa-calculator",
+      "subjects": [
+        "Basic Math", "Pre-Algebra", "Algebra I", "Algebra II", "Geometry", "Trigonometry",
+        "Pre-Calculus", "Calculus AB", "Calculus BC", "Multivariable Calculus",
+        "Linear Algebra", "Differential Equations", "Statistics", "Probability",
+        "Discrete Mathematics", "Number Theory", "Abstract Algebra", "Real Analysis",
+        "Complex Analysis", "Topology", "Applied Mathematics", "Financial Mathematics",
+        "Actuarial Science", "Mathematical Logic", "Combinatorics", "Graph Theory"
+      ]
+    },
+    {
+      "category": "Sciences",
+      "icon": "fa-flask",
+      "subjects": [
+        "General Science", "Biology", "AP Biology", "Chemistry", "AP Chemistry",
+        "Organic Chemistry", "Biochemistry", "Physical Chemistry", "Analytical Chemistry",
+        "Physics", "AP Physics 1", "AP Physics 2", "AP Physics C: Mechanics",
+        "AP Physics C: Electricity & Magnetism", "Quantum Physics", "Thermodynamics",
+        "Astronomy", "Astrophysics", "Earth Science", "Geology", "Meteorology",
+        "Environmental Science", "AP Environmental Science", "Anatomy & Physiology",
+        "Microbiology", "Genetics", "Molecular Biology", "Cell Biology", "Neuroscience",
+        "Immunology", "Virology", "Ecology", "Marine Biology", "Botany", "Zoology",
+        "Forensic Science", "Materials Science", "Nanotechnology"
+      ]
+    },
+    {
+      "category": "English & Language Arts",
+      "icon": "fa-book",
+      "subjects": [
+        "English Grammar", "English Composition", "Creative Writing", "Essay Writing",
+        "Technical Writing", "Business Writing", "Academic Writing", "Research Writing",
+        "Literature", "American Literature", "British Literature", "World Literature",
+        "Contemporary Literature", "Classical Literature", "Poetry", "Drama",
+        "Shakespeare", "Journalism", "Public Speaking", "Debate", "Rhetoric",
+        "Reading Comprehension", "Critical Reading", "Phonics", "Vocabulary",
+        "Spelling", "Handwriting", "Speech", "Communication Skills", "Media Studies",
+        "Film Studies", "Screenwriting", "Playwriting", "Literary Analysis",
+        "Comparative Literature", "Children's Literature"
+      ]
+    },
+    {
+      "category": "World Languages",
+      "icon": "fa-language",
+      "subjects": [
+        "Spanish", "French", "German", "Italian", "Portuguese", "Romanian",
+        "Mandarin Chinese", "Cantonese", "Japanese", "Korean", "Vietnamese",
+        "Thai", "Indonesian", "Malay", "Filipino/Tagalog", "Arabic", "Hebrew",
+        "Turkish", "Persian/Farsi", "Urdu", "Hindi", "Bengali", "Punjabi",
+        "Tamil", "Telugu", "Russian", "Polish", "Czech", "Ukrainian", "Greek",
+        "Latin", "Ancient Greek", "Sanskrit", "Dutch", "Swedish", "Norwegian",
+        "Danish", "Finnish", "Icelandic", "Swahili", "Yoruba", "Zulu",
+        "American Sign Language (ASL)", "British Sign Language (BSL)",
+        "ESL/ESOL", "TOEFL Preparation", "IELTS Preparation"
+      ]
+    },
+    {
+      "category": "Computer Science & Technology",
+      "icon": "fa-laptop-code",
+      "subjects": [
+        "Introduction to Programming", "Python Programming", "Java Programming",
+        "JavaScript", "C Programming", "C++", "C#", "Ruby", "Swift", "Kotlin",
+        "Go", "Rust", "R Programming", "MATLAB", "HTML/CSS", "Web Development",
+        "Front-End Development", "Back-End Development", "Full-Stack Development",
+        "Mobile App Development", "iOS Development", "Android Development",
+        "Game Development", "Unity", "Unreal Engine", "Data Science",
+        "Machine Learning", "Deep Learning", "Artificial Intelligence",
+        "Natural Language Processing", "Computer Vision", "Robotics",
+        "Cybersecurity", "Ethical Hacking", "Network Security", "Cryptography",
+        "Database Management", "SQL", "NoSQL", "Cloud Computing", "AWS",
+        "Azure", "Google Cloud", "DevOps", "Docker", "Kubernetes",
+        "Blockchain", "Cryptocurrency", "UI/UX Design", "3D Modeling",
+        "Computer Graphics", "Operating Systems", "Computer Architecture",
+        "Algorithms", "Data Structures", "Software Engineering",
+        "Agile Development", "Version Control (Git)"
+      ]
+    },
+    {
+      "category": "Social Studies & History",
+      "icon": "fa-globe",
+      "subjects": [
+        "U.S. History", "AP U.S. History", "World History", "AP World History",
+        "European History", "AP European History", "Ancient History",
+        "Medieval History", "Renaissance History", "Modern History",
+        "Asian History", "African History", "Latin American History",
+        "Middle Eastern History", "Military History", "Economic History",
+        "Social History", "Cultural History", "Art History", "AP Art History",
+        "Music History", "Geography", "Human Geography", "AP Human Geography",
+        "Physical Geography", "Cartography", "Government", "U.S. Government",
+        "AP U.S. Government & Politics", "Comparative Government",
+        "International Relations", "Political Science", "Public Policy",
+        "Economics", "Microeconomics", "Macroeconomics", "AP Microeconomics",
+        "AP Macroeconomics", "International Economics", "Behavioral Economics",
+        "Psychology", "AP Psychology", "Social Psychology", "Developmental Psychology",
+        "Abnormal Psychology", "Cognitive Psychology", "Sociology", "Anthropology",
+        "Archaeology", "Philosophy", "Ethics", "Logic", "Religious Studies",
+        "Theology", "Comparative Religion", "Criminal Justice", "Law Studies",
+        "Women's Studies", "Gender Studies", "African American Studies",
+        "Latino Studies", "Asian Studies", "Native American Studies",
+        "Urban Studies", "Environmental Studies"
+      ]
+    },
+    {
+      "category": "Business & Finance",
+      "icon": "fa-briefcase",
+      "subjects": [
+        "Accounting", "Financial Accounting", "Managerial Accounting",
+        "Cost Accounting", "Tax Accounting", "Auditing", "Finance",
+        "Corporate Finance", "Personal Finance", "Investment Banking",
+        "Financial Planning", "Risk Management", "Insurance",
+        "Real Estate", "Real Estate Finance", "Property Management",
+        "Marketing", "Digital Marketing", "Social Media Marketing",
+        "Content Marketing", "SEO", "Brand Management", "Market Research",
+        "Business Management", "Operations Management", "Project Management",
+        "Supply Chain Management", "Logistics", "Quality Management",
+        "Human Resources", "Organizational Behavior", "Leadership",
+        "Entrepreneurship", "Business Strategy", "Business Law",
+        "Contract Law", "International Business", "E-commerce",
+        "Business Analytics", "Business Statistics", "Business Communication",
+        "Negotiation", "Sales", "Customer Service", "Hospitality Management",
+        "Tourism Management", "Sports Management", "Non-Profit Management",
+        "Healthcare Management", "Public Administration"
+      ]
+    },
+    {
+      "category": "Test Preparation",
+      "icon": "fa-graduation-cap",
+      "subjects": [
+        "SAT", "SAT Math", "SAT Reading", "SAT Writing", "ACT", "ACT Math",
+        "ACT English", "ACT Reading", "ACT Science", "PSAT", "GRE",
+        "GRE Verbal", "GRE Quantitative", "GRE Writing", "GMAT", "LSAT",
+        "MCAT", "MCAT Biology", "MCAT Chemistry", "MCAT Physics", "MCAT CARS",
+        "TOEFL", "IELTS", "Cambridge English", "PTE Academic", "Duolingo English Test",
+        "AP Exams", "IB Exams", "A-Levels", "GCSE", "ASVAB", "GED",
+        "HiSET", "TASC", "Praxis", "CBEST", "CSET", "FTCE", "TExES",
+        "ParaPro", "CFA", "CPA", "Series 7", "Series 65", "PMP",
+        "CompTIA A+", "CompTIA Network+", "CompTIA Security+",
+        "Bar Exam", "NCLEX-RN", "NAPLEX", "USMLE Step 1", "USMLE Step 2",
+        "DAT", "OAT", "PCAT", "Civil Service Exams", "Police Exams",
+        "Firefighter Exams", "Military Entrance Exams"
+      ]
+    },
+    {
+      "category": "Arts & Music",
+      "icon": "fa-palette",
+      "subjects": [
+        "Art History", "Drawing", "Sketching", "Figure Drawing", "Painting",
+        "Oil Painting", "Watercolor", "Acrylic Painting", "Digital Art",
+        "Digital Painting", "3D Art", "Sculpture", "Ceramics", "Pottery",
+        "Printmaking", "Photography", "Digital Photography", "Photo Editing",
+        "Graphic Design", "Logo Design", "Typography", "Web Design",
+        "UI/UX Design", "Fashion Design", "Interior Design", "Architecture",
+        "Landscape Design", "Animation", "2D Animation", "3D Animation",
+        "Motion Graphics", "Video Editing", "Film Making", "Film Studies",
+        "Film History", "Cinematography", "Music Theory", "Music Composition",
+        "Music History", "Classical Music", "Jazz", "Piano", "Guitar",
+        "Classical Guitar", "Bass Guitar", "Violin", "Viola", "Cello",
+        "Double Bass", "Flute", "Clarinet", "Saxophone", "Trumpet",
+        "Trombone", "French Horn", "Drums", "Percussion", "Voice/Singing",
+        "Opera", "Musical Theater", "Choir", "Music Production",
+        "Audio Engineering", "DJing", "Electronic Music", "Songwriting",
+        "Theater", "Acting", "Drama", "Playwriting", "Stage Design",
+        "Dance", "Ballet", "Contemporary Dance", "Hip Hop", "Ballroom Dancing"
+      ]
+    },
+    {
+      "category": "Health & Medical Sciences",
+      "icon": "fa-heartbeat",
+      "subjects": [
+        "Nursing", "Nursing Fundamentals", "Medical-Surgical Nursing",
+        "Pediatric Nursing", "Maternity Nursing", "Mental Health Nursing",
+        "Medicine", "Anatomy", "Physiology", "Pathology", "Pharmacology",
+        "Medical Terminology", "Clinical Medicine", "Emergency Medicine",
+        "Internal Medicine", "Surgery", "Pediatrics", "Obstetrics",
+        "Gynecology", "Psychiatry", "Radiology", "Anesthesiology",
+        "Nutrition", "Dietetics", "Sports Nutrition", "Clinical Nutrition",
+        "Public Health", "Epidemiology", "Biostatistics", "Health Policy",
+        "Global Health", "Community Health", "Kinesiology", "Exercise Science",
+        "Sports Medicine", "Athletic Training", "Physical Therapy",
+        "Occupational Therapy", "Speech Therapy", "Respiratory Therapy",
+        "Dentistry", "Dental Hygiene", "Orthodontics", "Pharmacy",
+        "Pharmaceutical Sciences", "Veterinary Science", "Animal Science",
+        "Medical Coding", "Medical Billing", "Healthcare Administration",
+        "Medical Ethics", "Bioethics", "Gerontology", "Optometry",
+        "Audiology", "Chiropractic", "Alternative Medicine", "Holistic Health"
+      ]
+    },
+    {
+      "category": "Engineering",
+      "icon": "fa-cogs",
+      "subjects": [
+        "Mechanical Engineering", "Thermodynamics", "Fluid Mechanics",
+        "Heat Transfer", "Machine Design", "Manufacturing", "Robotics",
+        "Electrical Engineering", "Circuit Analysis", "Electronics",
+        "Digital Logic", "Power Systems", "Control Systems", "Signal Processing",
+        "Civil Engineering", "Structural Engineering", "Transportation Engineering",
+        "Geotechnical Engineering", "Environmental Engineering", "Water Resources",
+        "Chemical Engineering", "Process Engineering", "Reaction Engineering",
+        "Separation Processes", "Process Control", "Aerospace Engineering",
+        "Aerodynamics", "Propulsion", "Flight Mechanics", "Spacecraft Design",
+        "Biomedical Engineering", "Biomechanics", "Biomaterials", "Medical Devices",
+        "Tissue Engineering", "Computer Engineering", "Embedded Systems",
+        "VLSI Design", "Computer Networks", "Industrial Engineering",
+        "Operations Research", "Quality Control", "Systems Engineering",
+        "Materials Science", "Metallurgy", "Polymer Science", "Nanotechnology",
+        "Nuclear Engineering", "Petroleum Engineering", "Mining Engineering",
+        "Agricultural Engineering", "Ocean Engineering", "Engineering Mathematics",
+        "Engineering Economics", "CAD/AutoCAD", "SolidWorks", "ANSYS",
+        "MATLAB for Engineers", "Engineering Ethics", "Technical Drawing"
+      ]
+    },
+    {
+      "category": "Special Education & Learning Support",
+      "icon": "fa-hands-helping",
+      "subjects": [
+        "ADHD Support", "Dyslexia Support", "Autism Spectrum Support",
+        "Learning Disabilities Support", "Dyscalculia Support", "Dysgraphia Support",
+        "Executive Functioning Skills", "Study Skills", "Time Management",
+        "Organization Skills", "Note-Taking Strategies", "Test-Taking Strategies",
+        "Memory Techniques", "Speed Reading", "Critical Thinking",
+        "Problem-Solving Skills", "Test Anxiety Management", "Stress Management",
+        "Mindfulness for Students", "Gifted Education", "Twice-Exceptional Support",
+        "Homeschool Support", "Homeschool Curriculum Planning", "Adult Literacy",
+        "Adult Basic Education", "College Readiness", "College Application Help",
+        "Essay Writing for College", "Scholarship Applications", "Career Counseling",
+        "College Counseling", "Academic Coaching", "Life Skills", "Social Skills",
+        "Emotional Regulation", "Behavioral Support", "IEP Support",
+        "504 Plan Support", "Assistive Technology", "Alternative Communication"
+      ]
+    },
+    {
+      "category": "Professional Development",
+      "icon": "fa-chart-line",
+      "subjects": [
+        "Resume Writing", "Cover Letter Writing", "LinkedIn Optimization",
+        "Interview Preparation", "Job Search Strategies", "Networking Skills",
+        "Professional Communication", "Business Email Writing", "Presentation Skills",
+        "Public Speaking for Professionals", "Team Building", "Conflict Resolution",
+        "Time Management for Professionals", "Productivity", "Goal Setting",
+        "Career Transition", "Personal Branding", "Executive Coaching",
+        "Leadership Development", "Management Skills", "Emotional Intelligence",
+        "Cultural Competency", "Diversity & Inclusion", "Remote Work Skills",
+        "Digital Literacy", "Microsoft Office", "Excel Advanced", "PowerPoint",
+        "Google Workspace", "Salesforce", "SAP", "Oracle", "QuickBooks",
+        "Professional Certifications", "Continuing Education", "Trade Skills",
+        "Apprenticeship Preparation", "Entrepreneurship Skills", "Freelancing",
+        "Consulting Skills", "Grant Writing", "Fundraising", "Board Governance"
+      ]
+    },
+    {
+      "category": "Life Skills & Hobbies",
+      "icon": "fa-smile",
+      "subjects": [
+        "Cooking", "Baking", "Nutrition Planning", "Meal Prep", "Wine Tasting",
+        "Gardening", "Indoor Plants", "Landscaping", "Home Improvement", "DIY",
+        "Woodworking", "Sewing", "Knitting", "Crochet", "Quilting", "Jewelry Making",
+        "Personal Finance", "Budgeting", "Investing for Beginners", "Retirement Planning",
+        "Tax Preparation", "Real Estate Investment", "Stock Trading", "Cryptocurrency",
+        "Fitness Training", "Yoga", "Pilates", "Meditation", "Martial Arts",
+        "Self-Defense", "Chess", "Bridge", "Poker", "Magic Tricks", "Juggling",
+        "Creative Writing for Fun", "Blogging", "Podcasting", "YouTube Creation",
+        "Social Media Management", "Photography as Hobby", "Travel Planning",
+        "Language for Travel", "Cultural Etiquette", "Wine Making", "Beer Brewing",
+        "Pet Training", "Parenting Skills", "Child Development", "Elder Care",
+        "Sign Language for Families", "Genealogy", "Scrapbooking", "Calligraphy"
+      ]
+    }
+  ]
+}

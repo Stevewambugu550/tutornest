@@ -1,0 +1,22 @@
+{
+  "name": "tutornest",
+  "version": "1.0.0",
+  "description": "TutorNest - Expert Tutoring Platform for Every Student",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve .",
+    "build": "echo 'No build required for static site'"
+  },
+  "keywords": [
+    "tutoring",
+    "education",
+    "online-learning",
+    "tutors",
+    "students"
+  ],
+  "author": "TutorNest Team",
+  "license": "MIT",
+  "devDependencies": {
+    "serve": "^14.2.0"
+  }
+}

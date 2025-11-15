@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join TutorNest - Student & Tutor Registration</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/auth.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-left">
+            <div class="auth-content">
+                <div class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>TutorNest</span>
+                </div>
+                
+                <h1>Join America's #1 Tutoring Platform</h1>
+                <p>50,000+ Expert Tutors • 2M+ Students • 95% Success Rate</p>
+                
+                <!-- Account Type Selection -->
+                <div class="account-type-selector">
+                    <button class="type-btn active" data-type="student">
+                        <i class="fas fa-user-graduate"></i>
+                        <span>I'm a Student</span>
+                    </button>
+                    <button class="type-btn" data-type="tutor">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                        <span>I'm a Tutor</span>
+                    </button>
+                    <button class="type-btn" data-type="parent">
+                        <i class="fas fa-user-friends"></i>
+                        <span>I'm a Parent</span>
+                    </button>
+                </div>
+                
+                <!-- Student Registration Form -->
+                <form id="student-form" class="registration-form active">
+                    <h2>Create Student Account</h2>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <input type="text" name="firstName" required>
+                            <label>First Name</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="lastName" required>
+                            <label>Last Name</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="email" name="email" required>
+                        <label>Email Address</label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="password" name="password" required>
+                        <label>Password</label>
+                        <div class="password-strength">
+                            <div class="strength-bar"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <select name="gradeLevel" required>
+                                <option value="">Select Grade Level</option>
+                                <option value="elementary">Elementary (K-5)</option>
+                                <option value="middle">Middle School (6-8)</option>
+                                <option value="high">High School (9-12)</option>
+                                <option value="college">College/University</option>
+                                <option value="graduate">Graduate School</option>
+                                <option value="adult">Adult Learner</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" name="phone">
+                            <label>Phone (Optional)</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <select name="primarySubject">
+                            <option value="">What do you need help with?</option>
+                            <option value="math">Mathematics</option>
+                            <option value="science">Science</option>
+                            <option value="english">English</option>
+                            <option value="languages">Foreign Languages</option>
+                            <option value="computer">Computer Science</option>
+                            <option value="test-prep">Test Preparation</option>
+                            <option value="multiple">Multiple Subjects</option>
+                        </select>
+                    </div>
+                    
+                    <div class="terms">
+                        <label>
+                            <input type="checkbox" required>
+                            I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="btn-submit">
+                        Create Student Account
+                    </button>
+                    
+                    <div class="social-auth">
+                        <p>Or sign up with</p>
+                        <div class="social-buttons">
+                            <button type="button" class="social-btn google">
+                                <i class="fab fa-google"></i> Google
+                            </button>
+                            <button type="button" class="social-btn facebook">
+                                <i class="fab fa-facebook"></i> Facebook
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                
+                <!-- Tutor Registration Form -->
+                <form id="tutor-form" class="registration-form">
+                    <h2>Apply to Become a Tutor</h2>
+                    <p class="form-description">Join 50,000+ tutors earning $30-$200/hour</p>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <input type="text" name="firstName" required>
+                            <label>First Name</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="lastName" required>
+                            <label>Last Name</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="email" name="email" required>
+                        <label>Email Address</label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="password" name="password" required>
+                        <label>Password</label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <select name="education" required>
+                            <option value="">Highest Education Level</option>
+                            <option value="high-school">High School Diploma</option>
+                            <option value="bachelor">Bachelor's Degree</option>
+                            <option value="master">Master's Degree</option>
+                            <option value="phd">Ph.D.</option>
+                            <option value="professional">Professional Degree</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <select name="experience" required>
+                            <option value="">Teaching Experience</option>
+                            <option value="0-1">Less than 1 year</option>
+                            <option value="1-3">1-3 years</option>
+                            <option value="3-5">3-5 years</option>
+                            <option value="5+">5+ years</option>
+                        </select>
+                    </div>
+                    
+                    <div class="verification-note">
+                        <i class="fas fa-shield-alt"></i>
+                        <p>All tutors undergo background checks and credential verification</p>
+                    </div>
+                    
+                    <button type="submit" class="btn-submit">
+                        Continue to Application →
+                    </button>
+                </form>
+                
+                <!-- Parent Registration Form -->
+                <form id="parent-form" class="registration-form">
+                    <h2>Parent Account</h2>
+                    <p class="form-description">Manage your child's learning journey</p>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <input type="text" name="parentFirstName" required>
+                            <label>Parent First Name</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="parentLastName" required>
+                            <label>Parent Last Name</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="email" name="email" required>
+                        <label>Email Address</label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="password" name="password" required>
+                        <label>Password</label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="text" name="childName" required>
+                        <label>Child's Name</label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <select name="childGrade" required>
+                            <option value="">Child's Grade Level</option>
+                            <option value="k-2">Kindergarten - 2nd</option>
+                            <option value="3-5">3rd - 5th</option>
+                            <option value="6-8">6th - 8th</option>
+                            <option value="9-12">9th - 12th</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="btn-submit">
+                        Create Parent Account
+                    </button>
+                </form>
+                
+                <div class="auth-footer">
+                    <p>Already have an account? <a href="login.html">Sign In</a></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="auth-right">
+            <div class="features-showcase">
+                <h2>Why Choose TutorNest?</h2>
+                <div class="feature-list">
+                    <div class="feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>50,000+ Verified Expert Tutors</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>All 200+ Academic Subjects</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>24/7 Instant Tutoring Available</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Free Trial Session</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Background-Checked Tutors</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Money-Back Guarantee</span>
+                    </div>
+                </div>
+                
+                <div class="testimonial">
+                    <p>"TutorNest helped me improve my SAT score by 300 points! The tutors are amazing."</p>
+                    <div class="author">
+                        <img src="https://i.pravatar.cc/50?img=5" alt="Student">
+                        <div>
+                            <strong>Sarah Mitchell</strong>
+                            <span>High School Senior</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="../js/auth.js"></script>
+</body>
+</html>

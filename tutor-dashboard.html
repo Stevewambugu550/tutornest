@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutor Dashboard - TutorNest Professional</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <aside class="dashboard-sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>TutorNest Pro</span>
+                </div>
+                <div class="tutor-badge elite">
+                    <i class="fas fa-crown"></i> Elite Tutor
+                </div>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="#overview" class="nav-item active">
+                    <i class="fas fa-home"></i> Overview
+                </a>
+                <a href="#schedule" class="nav-item">
+                    <i class="fas fa-calendar"></i> Schedule
+                    <span class="badge">5</span>
+                </a>
+                <a href="#students" class="nav-item">
+                    <i class="fas fa-users"></i> Students
+                    <span class="count">234</span>
+                </a>
+                <a href="#earnings" class="nav-item">
+                    <i class="fas fa-dollar-sign"></i> Earnings
+                </a>
+                <a href="#messages" class="nav-item">
+                    <i class="fas fa-envelope"></i> Messages
+                    <span class="badge">12</span>
+                </a>
+                <a href="#resources" class="nav-item">
+                    <i class="fas fa-folder"></i> Resources
+                </a>
+                <a href="#verification" class="nav-item">
+                    <i class="fas fa-shield-alt"></i> Verification
+                </a>
+                <a href="#profile" class="nav-item">
+                    <i class="fas fa-user"></i> Profile
+                </a>
+                <a href="#settings" class="nav-item">
+                    <i class="fas fa-cog"></i> Settings
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="availability-toggle">
+                    <label class="switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                    <span>Available</span>
+                </div>
+                <button class="btn-logout">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </aside>
+        
+        <!-- Main Dashboard Content -->
+        <main class="dashboard-main">
+            <!-- Top Bar -->
+            <header class="dashboard-header">
+                <div class="header-left">
+                    <h1>Welcome back, Dr. Sarah!</h1>
+                    <p>You have 5 sessions scheduled today</p>
+                </div>
+                <div class="header-right">
+                    <div class="notification-icon">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-dot"></span>
+                    </div>
+                    <div class="quick-stats">
+                        <div class="stat">
+                            <span class="label">Today's Earnings</span>
+                            <span class="value">$425</span>
+                        </div>
+                        <div class="stat">
+                            <span class="label">Rating</span>
+                            <span class="value">5.0 ⭐</span>
+                        </div>
+                    </div>
+                    <div class="profile-menu">
+                        <img src="https://i.pravatar.cc/50?img=1" alt="Profile">
+                        <div class="status-indicator online"></div>
+                    </div>
+                </div>
+            </header>
+            
+            <!-- Dashboard Content -->
+            <div class="dashboard-content">
+                <!-- Verification Status Alert -->
+                <div class="verification-alert success">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <h3>Verification Complete!</h3>
+                        <p>All your credentials have been verified. You're eligible for Elite status.</p>
+                    </div>
+                    <button class="btn-view">View Details</button>
+                </div>
+                
+                <!-- Stats Grid -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon earnings">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div class="stat-details">
+                            <span class="stat-label">This Month</span>
+                            <span class="stat-value">$8,542</span>
+                            <span class="stat-change positive">+15% from last month</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon sessions">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <div class="stat-details">
+                            <span class="stat-label">Sessions Completed</span>
+                            <span class="stat-value">2,847</span>
+                            <span class="stat-change">142 this month</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon students">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                        <div class="stat-details">
+                            <span class="stat-label">Active Students</span>
+                            <span class="stat-value">234</span>
+                            <span class="stat-change positive">+12 new</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon rating">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="stat-details">
+                            <span class="stat-label">Average Rating</span>
+                            <span class="stat-value">5.0</span>
+                            <span class="stat-change">324 reviews</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Today's Schedule -->
+                <div class="content-section">
+                    <div class="section-header">
+                        <h2>Today's Schedule</h2>
+                        <button class="btn-view-all">View Full Calendar</button>
+                    </div>
+                    
+                    <div class="schedule-timeline">
+                        <div class="session-card upcoming">
+                            <div class="session-time">
+                                <span class="time">10:00 AM</span>
+                                <span class="duration">60 min</span>
+                            </div>
+                            <div class="session-details">
+                                <h3>Calculus II - Integrals</h3>
+                                <p>With Jennifer Martinez (High School)</p>
+                                <div class="session-tags">
+                                    <span class="tag">AP Calculus</span>
+                                    <span class="tag">Exam Prep</span>
+                                </div>
+                            </div>
+                            <div class="session-actions">
+                                <button class="btn-join">
+                                    <i class="fas fa-video"></i> Join Session
+                                </button>
+                                <button class="btn-materials">
+                                    <i class="fas fa-folder"></i> Materials
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="session-card">
+                            <div class="session-time">
+                                <span class="time">11:30 AM</span>
+                                <span class="duration">45 min</span>
+                            </div>
+                            <div class="session-details">
+                                <h3>Linear Algebra - Matrices</h3>
+                                <p>With David Kim (College)</p>
+                                <div class="session-tags">
+                                    <span class="tag">University Level</span>
+                                </div>
+                            </div>
+                            <div class="session-actions">
+                                <button class="btn-prepare">Prepare</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Verification & Credentials -->
+                <div class="content-section">
+                    <div class="section-header">
+                        <h2>Your Credentials & Verification</h2>
+                        <button class="btn-add">Add Credential</button>
+                    </div>
+                    
+                    <div class="credentials-grid">
+                        <div class="credential-card verified">
+                            <div class="credential-icon">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <div class="credential-info">
+                                <h3>PhD Mathematics</h3>
+                                <p>MIT - 2015</p>
+                                <span class="verification-badge">
+                                    <i class="fas fa-check"></i> Verified
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="credential-card verified">
+                            <div class="credential-icon">
+                                <i class="fas fa-certificate"></i>
+                            </div>
+                            <div class="credential-info">
+                                <h3>Teaching Certificate</h3>
+                                <p>State of Massachusetts</p>
+                                <span class="verification-badge">
+                                    <i class="fas fa-check"></i> Verified
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="credential-card verified">
+                            <div class="credential-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="credential-info">
+                                <h3>Background Check</h3>
+                                <p>Passed - Oct 2024</p>
+                                <span class="verification-badge">
+                                    <i class="fas fa-check"></i> Cleared
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="credential-card pending">
+                            <div class="credential-icon">
+                                <i class="fas fa-award"></i>
+                            </div>
+                            <div class="credential-info">
+                                <h3>Elite Tutor Status</h3>
+                                <p>Application Pending</p>
+                                <span class="verification-badge pending">
+                                    <i class="fas fa-clock"></i> In Review
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Recent Reviews -->
+                <div class="content-section">
+                    <div class="section-header">
+                        <h2>Recent Reviews</h2>
+                        <button class="btn-view-all">View All Reviews</button>
+                    </div>
+                    
+                    <div class="reviews-list">
+                        <div class="review-card">
+                            <div class="review-header">
+                                <img src="https://i.pravatar.cc/40?img=5" alt="Student">
+                                <div>
+                                    <h4>Jennifer Martinez</h4>
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                                <span class="review-date">2 days ago</span>
+                            </div>
+                            <p>"Dr. Sarah is amazing! She helped me understand calculus concepts that I struggled with for months. Highly recommend!"</p>
+                            <div class="review-tags">
+                                <span>AP Calculus</span>
+                                <span>Patient</span>
+                                <span>Clear Explanations</span>
+                            </div>
+                        </div>
+                        
+                        <div class="review-card">
+                            <div class="review-header">
+                                <img src="https://i.pravatar.cc/40?img=8" alt="Student">
+                                <div>
+                                    <h4>Michael Chen</h4>
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                                <span class="review-date">1 week ago</span>
+                            </div>
+                            <p>"Best tutor on the platform! Got an A on my linear algebra exam thanks to her help."</p>
+                            <div class="review-tags">
+                                <span>Linear Algebra</span>
+                                <span>Exam Prep</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Earnings Chart -->
+                <div class="content-section">
+                    <div class="section-header">
+                        <h2>Earnings Overview</h2>
+                        <select class="period-selector">
+                            <option>Last 30 Days</option>
+                            <option>Last 3 Months</option>
+                            <option>Last Year</option>
+                        </select>
+                    </div>
+                    
+                    <div class="earnings-chart">
+                        <canvas id="earningsChart"></canvas>
+                    </div>
+                    
+                    <div class="earnings-breakdown">
+                        <div class="breakdown-item">
+                            <span class="label">Regular Sessions</span>
+                            <span class="amount">$7,230</span>
+                            <span class="percentage">85%</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span class="label">Instant Classes</span>
+                            <span class="amount">$892</span>
+                            <span class="percentage">10%</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span class="label">Group Sessions</span>
+                            <span class="amount">$420</span>
+                            <span class="percentage">5%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <!-- Right Panel - Quick Actions -->
+        <aside class="dashboard-right-panel">
+            <div class="panel-section">
+                <h3>Quick Actions</h3>
+                <div class="quick-actions">
+                    <button class="action-btn">
+                        <i class="fas fa-plus"></i> Add Availability
+                    </button>
+                    <button class="action-btn">
+                        <i class="fas fa-video"></i> Start Instant Class
+                    </button>
+                    <button class="action-btn">
+                        <i class="fas fa-upload"></i> Upload Resource
+                    </button>
+                    <button class="action-btn">
+                        <i class="fas fa-dollar-sign"></i> Request Payout
+                    </button>
+                </div>
+            </div>
+            
+            <div class="panel-section">
+                <h3>Upcoming Students</h3>
+                <div class="student-list">
+                    <div class="student-item">
+                        <img src="https://i.pravatar.cc/32?img=5" alt="Student">
+                        <div>
+                            <p class="name">Jennifer Martinez</p>
+                            <p class="time">10:00 AM</p>
+                        </div>
+                        <button class="btn-message">
+                            <i class="fas fa-comment"></i>
+                        </button>
+                    </div>
+                    <div class="student-item">
+                        <img src="https://i.pravatar.cc/32?img=8" alt="Student">
+                        <div>
+                            <p class="name">David Kim</p>
+                            <p class="time">11:30 AM</p>
+                        </div>
+                        <button class="btn-message">
+                            <i class="fas fa-comment"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="panel-section">
+                <h3>Performance Tips</h3>
+                <div class="tips-card">
+                    <i class="fas fa-lightbulb"></i>
+                    <p>Your response time is excellent! Keep responding to student inquiries within 30 minutes to maintain your Elite status.</p>
+                </div>
+            </div>
+        </aside>
+    </div>
+    
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

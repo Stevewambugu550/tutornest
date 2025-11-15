@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instant Classes - Get Help Now | TutorNest</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/instant-classes.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Instant Classes Hero Section -->
+    <section class="instant-hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Get <span class="gradient-text">Instant Help</span> From Expert Tutors</h1>
+                <p>No scheduling needed. Connect with available tutors right now!</p>
+                
+                <!-- Emergency Help Banner -->
+                <div class="emergency-banner">
+                    <i class="fas fa-bolt"></i>
+                    <span>🔥 15 tutors available for immediate help!</span>
+                    <button class="btn-emergency">Get Emergency Help</button>
+                </div>
+                
+                <!-- Quick Subject Selection -->
+                <div class="quick-subjects">
+                    <button class="subject-btn active" data-subject="all">All Subjects</button>
+                    <button class="subject-btn" data-subject="math">Mathematics</button>
+                    <button class="subject-btn" data-subject="science">Science</button>
+                    <button class="subject-btn" data-subject="english">English</button>
+                    <button class="subject-btn" data-subject="coding">Programming</button>
+                    <button class="subject-btn" data-subject="test-prep">Test Prep</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Available Now Section -->
+    <section class="available-now">
+        <div class="container">
+            <div class="section-header">
+                <h2>Tutors Available Right Now</h2>
+                <div class="filter-controls">
+                    <select class="urgency-filter">
+                        <option value="all">All Sessions</option>
+                        <option value="instant">Instant (< 5 min)</option>
+                        <option value="quick">Quick (< 15 min)</option>
+                        <option value="scheduled">Within 1 hour</option>
+                    </select>
+                    <button class="btn-refresh">
+                        <i class="fas fa-sync"></i> Refresh
+                    </button>
+                </div>
+            </div>
+
+            <!-- Live Tutors Grid -->
+            <div class="live-tutors-grid">
+                <!-- Instant Tutor Card 1 -->
+                <div class="instant-tutor-card available">
+                    <div class="availability-badge">
+                        <span class="pulse"></span>
+                        Available Now
+                    </div>
+                    
+                    <div class="tutor-quick-info">
+                        <img src="https://i.pravatar.cc/100?img=1" alt="Dr. Sarah" class="tutor-avatar">
+                        <div class="tutor-details">
+                            <h3>Dr. Sarah Johnson</h3>
+                            <p class="expertise">Calculus, Algebra, Statistics</p>
+                            <div class="quick-stats">
+                                <span><i class="fas fa-star"></i> 5.0</span>
+                                <span><i class="fas fa-clock"></i> 2 min response</span>
+                                <span><i class="fas fa-users"></i> 500+ helped</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="instant-pricing">
+                        <div class="price-options">
+                            <div class="price-option">
+                                <span class="duration">15 min</span>
+                                <span class="price">$20</span>
+                            </div>
+                            <div class="price-option popular">
+                                <span class="duration">30 min</span>
+                                <span class="price">$35</span>
+                            </div>
+                            <div class="price-option">
+                                <span class="duration">60 min</span>
+                                <span class="price">$65</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="instant-actions">
+                        <button class="btn-instant-chat">
+                            <i class="fas fa-comment"></i> Quick Chat
+                        </button>
+                        <button class="btn-instant-class">
+                            <i class="fas fa-video"></i> Start Class Now
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Instant Tutor Card 2 - In Session -->
+                <div class="instant-tutor-card in-session">
+                    <div class="availability-badge busy">
+                        <span class="pulse"></span>
+                        In Session (Free in 10 min)
+                    </div>
+                    
+                    <div class="tutor-quick-info">
+                        <img src="https://i.pravatar.cc/100?img=3" alt="Michael" class="tutor-avatar">
+                        <div class="tutor-details">
+                            <h3>Michael Chen</h3>
+                            <p class="expertise">Python, Java, Web Development</p>
+                            <div class="quick-stats">
+                                <span><i class="fas fa-star"></i> 4.9</span>
+                                <span><i class="fas fa-clock"></i> 5 min response</span>
+                                <span><i class="fas fa-users"></i> 350+ helped</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="session-timer">
+                        <span>Available in:</span>
+                        <span class="countdown" data-time="600">10:00</span>
+                    </div>
+                    
+                    <div class="instant-actions">
+                        <button class="btn-notify">
+                            <i class="fas fa-bell"></i> Notify Me
+                        </button>
+                        <button class="btn-reserve">
+                            <i class="fas fa-bookmark"></i> Reserve Next
+                        </button>
+                    </div>
+                </div>
+
+                <!-- More tutor cards... -->
+            </div>
+
+            <!-- Load More -->
+            <div class="load-more-section">
+                <button class="btn-load-more">Show More Available Tutors</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- How Instant Classes Work -->
+    <section class="how-instant-works">
+        <div class="container">
+            <h2>How Instant Classes Work</h2>
+            <div class="instant-steps">
+                <div class="instant-step">
+                    <div class="step-icon">
+                        <i class="fas fa-hand-pointer"></i>
+                    </div>
+                    <h3>1. Choose a Tutor</h3>
+                    <p>Browse available tutors and pick one that matches your needs</p>
+                </div>
+                
+                <div class="instant-step">
+                    <div class="step-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>2. Start Instantly</h3>
+                    <p>Click "Start Class Now" to connect immediately via chat or video</p>
+                </div>
+                
+                <div class="instant-step">
+                    <div class="step-icon">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <h3>3. Pay As You Go</h3>
+                    <p>Pay only for the time you use. No commitments or subscriptions</p>
+                </div>
+                
+                <div class="instant-step">
+                    <div class="step-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3>4. Rate & Review</h3>
+                    <p>Help others by rating your experience after the session</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Emergency Tutoring Section -->
+    <section class="emergency-tutoring">
+        <div class="container">
+            <div class="emergency-card">
+                <div class="emergency-content">
+                    <h2>🚨 Need Emergency Homework Help?</h2>
+                    <p>Get connected with a tutor in under 60 seconds for urgent assignments</p>
+                    
+                    <div class="emergency-form">
+                        <input type="text" placeholder="What do you need help with?" class="emergency-input">
+                        <select class="emergency-deadline">
+                            <option>Due in 1 hour</option>
+                            <option>Due in 2 hours</option>
+                            <option>Due in 4 hours</option>
+                            <option>Due tomorrow</option>
+                        </select>
+                        <button class="btn-emergency-help">
+                            <i class="fas fa-rocket"></i> Get Help Now!
+                        </button>
+                    </div>
+                    
+                    <div class="emergency-note">
+                        <i class="fas fa-info-circle"></i>
+                        Emergency sessions have 50% surcharge for immediate availability
+                    </div>
+                </div>
+                
+                <div class="emergency-stats">
+                    <div class="stat">
+                        <span class="stat-number">45 sec</span>
+                        <span class="stat-label">Avg. Response Time</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">98%</span>
+                        <span class="stat-label">Success Rate</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">24/7</span>
+                        <span class="stat-label">Availability</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Real-time Queue System -->
+    <div class="queue-widget" id="queueWidget" style="display: none;">
+        <div class="queue-header">
+            <h4>Finding Your Tutor</h4>
+            <button class="queue-close"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="queue-content">
+            <div class="queue-animation">
+                <div class="spinner"></div>
+            </div>
+            <p>Matching you with the best available tutor...</p>
+            <div class="queue-info">
+                <span>Position in queue: <strong id="queuePosition">3</strong></span>
+                <span>Estimated wait: <strong id="estimatedWait">45 seconds</strong></span>
+            </div>
+            <button class="btn-cancel-queue">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Session Timer Widget -->
+    <div class="session-widget" id="sessionWidget" style="display: none;">
+        <div class="session-widget-header">
+            <span>Active Session</span>
+            <div class="session-controls">
+                <button><i class="fas fa-pause"></i></button>
+                <button><i class="fas fa-stop"></i></button>
+            </div>
+        </div>
+        <div class="session-widget-body">
+            <div class="session-time">00:15:23</div>
+            <div class="session-cost">$12.50</div>
+            <div class="session-tutor">
+                <img src="https://i.pravatar.cc/30" alt="Tutor">
+                <span>Dr. Sarah Johnson</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification System -->
+    <div class="notification-container" id="notificationContainer"></div>
+
+    <script src="js/instant-classes.js"></script>
+</body>
+</html>

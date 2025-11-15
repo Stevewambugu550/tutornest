@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Expert Tutors - 50,000+ Verified Educators | TutorNest</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/enhanced-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>TutorNest</span>
+            </div>
+            <div class="nav-menu">
+                <a href="index.html">Home</a>
+                <a href="find-tutors.html" class="active">Find Tutors</a>
+                <a href="instant-classes.html">Instant Classes</a>
+                <a href="chat-learn.html">Chat & Learn</a>
+            </div>
+            <div class="nav-buttons">
+                <a href="auth/register.html" class="btn-primary">Get Started</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Search Hero -->
+    <section class="search-hero">
+        <div class="container">
+            <h1>Find Your Perfect Tutor</h1>
+            <p>Choose from 50,000+ verified experts in 200+ subjects</p>
+            
+            <div class="advanced-search-bar">
+                <input type="text" placeholder="What do you want to learn?" class="search-input">
+                <select class="grade-select">
+                    <option>All Levels</option>
+                    <option>Elementary</option>
+                    <option>Middle School</option>
+                    <option>High School</option>
+                    <option>College</option>
+                    <option>Graduate</option>
+                    <option>Professional</option>
+                </select>
+                <button class="btn-search">
+                    <i class="fas fa-search"></i> Search Tutors
+                </button>
+            </div>
+            
+            <div class="popular-searches">
+                <span>Popular:</span>
+                <a href="#">SAT Prep</a>
+                <a href="#">Calculus</a>
+                <a href="#">Python</a>
+                <a href="#">Spanish</a>
+                <a href="#">MCAT</a>
+                <a href="#">Essay Writing</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="find-tutors-container">
+        <!-- Filters Sidebar -->
+        <aside class="filters-panel">
+            <div class="filter-header">
+                <h3>Filters</h3>
+                <button class="btn-clear">Clear All</button>
+            </div>
+            
+            <!-- Subject Filter -->
+            <div class="filter-group">
+                <h4>Subject</h4>
+                <div class="subject-tags">
+                    <button class="tag active">All</button>
+                    <button class="tag">Math</button>
+                    <button class="tag">Science</button>
+                    <button class="tag">English</button>
+                    <button class="tag">Languages</button>
+                    <button class="tag">Computer Science</button>
+                    <button class="tag">Test Prep</button>
+                    <button class="tag">Business</button>
+                    <button class="tag">Arts</button>
+                </div>
+            </div>
+            
+            <!-- Price Range -->
+            <div class="filter-group">
+                <h4>Price Range ($/hour)</h4>
+                <div class="price-slider">
+                    <input type="range" min="15" max="200" value="100" id="priceRange">
+                    <div class="price-display">
+                        <span>$15</span>
+                        <span id="currentPrice">$100</span>
+                        <span>$200+</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Availability -->
+            <div class="filter-group">
+                <h4>Availability</h4>
+                <label class="checkbox">
+                    <input type="checkbox" checked> Available Now
+                </label>
+                <label class="checkbox">
+                    <input type="checkbox"> Available Today
+                </label>
+                <label class="checkbox">
+                    <input type="checkbox"> Weekends
+                </label>
+                <label class="checkbox">
+                    <input type="checkbox"> Evenings
+                </label>
+            </div>
+            
+            <!-- Tutor Type -->
+            <div class="filter-group">
+                <h4>Tutor Credentials</h4>
+                <label class="checkbox">
+                    <input type="checkbox"> Elite Tutors Only
+                </label>
+                <label class="checkbox">
+                    <input type="checkbox"> PhD/Doctorate
+                </label>
+                <label class="checkbox">
+                    <input type="checkbox"> Masters Degree
+                </label>
+                <label class="checkbox">
+                    <input type="checkbox"> Teaching Certificate
+                </label>
+                <label class="checkbox">
+                    <input type="checkbox"> Native Speakers (Languages)
+                </label>
+            </div>
+            
+            <!-- Rating -->
+            <div class="filter-group">
+                <h4>Minimum Rating</h4>
+                <div class="rating-filter">
+                    <button class="rating-btn">Any</button>
+                    <button class="rating-btn">4+ ⭐</button>
+                    <button class="rating-btn active">4.5+ ⭐</button>
+                    <button class="rating-btn">5 ⭐</button>
+                </div>
+            </div>
+            
+            <!-- Special Needs -->
+            <div class="filter-group">
+                <h4>Special Support</h4>
+                <label class="checkbox">
+                    <input type="checkbox"> ADHD Support
+                </label>
+                <label class="checkbox">
+                    <input type="checkbox"> Dyslexia Support
+                </label>
+                <label class="checkbox">
+                    <input type="checkbox"> ESL/ESOL
+                </label>
+                <label class="checkbox">
+                    <input type="checkbox"> Learning Disabilities
+                </label>
+            </div>
+        </aside>
+        
+        <!-- Tutors Grid -->
+        <main class="tutors-main-content">
+            <!-- Results Header -->
+            <div class="results-header">
+                <div class="results-info">
+                    <h2>2,847 Tutors Found</h2>
+                    <p>Showing verified tutors matching your criteria</p>
+                </div>
+                <div class="sort-controls">
+                    <span>Sort by:</span>
+                    <select class="sort-select">
+                        <option>Best Match</option>
+                        <option>Top Rated</option>
+                        <option>Most Reviews</option>
+                        <option>Price: Low to High</option>
+                        <option>Price: High to Low</option>
+                        <option>Most Experience</option>
+                    </select>
+                    <div class="view-toggles">
+                        <button class="view-btn active"><i class="fas fa-th"></i></button>
+                        <button class="view-btn"><i class="fas fa-list"></i></button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tutors List -->
+            <div class="tutors-grid">
+                <!-- Elite Tutor Card 1 -->
+                <div class="tutor-card elite">
+                    <div class="tutor-badge elite-badge">
+                        <i class="fas fa-crown"></i> Elite
+                    </div>
+                    <div class="online-indicator">● Online Now</div>
+                    
+                    <div class="tutor-header">
+                        <img src="https://i.pravatar.cc/150?img=1" alt="Dr. Sarah Johnson" class="tutor-photo">
+                        <div class="tutor-info">
+                            <h3>Dr. Sarah Johnson</h3>
+                            <p class="credentials">PhD Mathematics, MIT</p>
+                            <div class="rating">
+                                <span class="stars">⭐⭐⭐⭐⭐</span>
+                                <span>5.0 (2,847 reviews)</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tutor-details">
+                        <div class="subjects">
+                            <span class="subject-tag">Calculus</span>
+                            <span class="subject-tag">Linear Algebra</span>
+                            <span class="subject-tag">Statistics</span>
+                            <span class="more">+3</span>
+                        </div>
+                        
+                        <p class="bio">MIT PhD specializing in making complex math simple. 12+ years experience. Helped 2000+ students improve grades.</p>
+                        
+                        <div class="tutor-stats">
+                            <div class="stat">
+                                <i class="fas fa-user-graduate"></i>
+                                <span>2,847 students</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-clock"></i>
+                                <span>24hr response</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-trophy"></i>
+                                <span>Top 1%</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tutor-footer">
+                        <div class="price">
+                            <span class="rate">$85</span>/hour
+                            <span class="trial">Free trial</span>
+                        </div>
+                        <div class="actions">
+                            <button class="btn-message"><i class="fas fa-comment"></i></button>
+                            <button class="btn-book">Book Now</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- More tutor cards... (I'll add 10 more diverse tutors) -->
+                <div class="tutor-card elite">
+                    <div class="tutor-badge elite-badge">
+                        <i class="fas fa-crown"></i> Elite
+                    </div>
+                    <div class="online-indicator busy">● In Session</div>
+                    
+                    <div class="tutor-header">
+                        <img src="https://i.pravatar.cc/150?img=3" alt="Michael Chen" class="tutor-photo">
+                        <div class="tutor-info">
+                            <h3>Michael Chen</h3>
+                            <p class="credentials">MS Computer Science, Stanford</p>
+                            <div class="rating">
+                                <span class="stars">⭐⭐⭐⭐⭐</span>
+                                <span>4.9 (1,923 reviews)</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tutor-details">
+                        <div class="subjects">
+                            <span class="subject-tag">Python</span>
+                            <span class="subject-tag">Java</span>
+                            <span class="subject-tag">Machine Learning</span>
+                            <span class="more">+5</span>
+                        </div>
+                        
+                        <p class="bio">Google engineer teaching coding. Specializing in interview prep and project help.</p>
+                        
+                        <div class="tutor-stats">
+                            <div class="stat">
+                                <i class="fas fa-user-graduate"></i>
+                                <span>1,923 students</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-clock"></i>
+                                <span>1hr response</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-briefcase"></i>
+                                <span>Google</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tutor-footer">
+                        <div class="price">
+                            <span class="rate">$95</span>/hour
+                            <span class="trial">Free trial</span>
+                        </div>
+                        <div class="actions">
+                            <button class="btn-message"><i class="fas fa-comment"></i></button>
+                            <button class="btn-book">Book Now</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Add more diverse tutor cards -->
+                <div class="tutor-card">
+                    <div class="online-indicator">● Online Now</div>
+                    
+                    <div class="tutor-header">
+                        <img src="https://i.pravatar.cc/150?img=5" alt="Maria Gonzalez" class="tutor-photo">
+                        <div class="tutor-info">
+                            <h3>Maria Gonzalez</h3>
+                            <p class="credentials">MA Linguistics, Columbia</p>
+                            <div class="rating">
+                                <span class="stars">⭐⭐⭐⭐⭐</span>
+                                <span>4.8 (1,654 reviews)</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tutor-details">
+                        <div class="subjects">
+                            <span class="subject-tag">Spanish</span>
+                            <span class="subject-tag">French</span>
+                            <span class="subject-tag">ESL</span>
+                        </div>
+                        
+                        <p class="bio">Native Spanish speaker fluent in 5 languages. Conversation specialist.</p>
+                        
+                        <div class="tutor-stats">
+                            <div class="stat">
+                                <i class="fas fa-globe"></i>
+                                <span>5 languages</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-certificate"></i>
+                                <span>DELE Certified</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tutor-footer">
+                        <div class="price">
+                            <span class="rate">$60</span>/hour
+                            <span class="trial">Free trial</span>
+                        </div>
+                        <div class="actions">
+                            <button class="btn-message"><i class="fas fa-comment"></i></button>
+                            <button class="btn-book">Book Now</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Load more cards would go here -->
+            </div>
+            
+            <!-- Pagination -->
+            <div class="pagination">
+                <button class="page-btn">← Previous</button>
+                <button class="page-num active">1</button>
+                <button class="page-num">2</button>
+                <button class="page-num">3</button>
+                <span>...</span>
+                <button class="page-num">142</button>
+                <button class="page-btn">Next →</button>
+            </div>
+        </main>
+    </div>
+    
+    <script src="js/find-tutors.js"></script>
+</body>
+</html>
