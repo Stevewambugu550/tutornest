@@ -111,24 +111,26 @@ body {
     display: none;
 }
 
-.btn-login {
-    padding: 0.5rem 1.5rem;
+.btn-login, a.btn-login {
+    padding: 0.6rem 1.5rem;
     background: transparent;
-    border: 2px solid var(--primary-color);
     color: var(--primary-color);
+    border: 2px solid var(--primary-color);
     border-radius: 8px;
-    font-weight: 600;
     cursor: pointer;
+    font-weight: 600;
     transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
 }
 
-.btn-login:hover {
+.btn-login:hover, a.btn-login:hover {
     background: var(--primary-color);
     color: white;
 }
 
-.btn-primary {
-    padding: 0.5rem 1.5rem;
+.btn-primary, a.btn-primary {
+    padding: 0.6rem 1.5rem;
     background: var(--primary-color);
     color: white;
     border: none;
@@ -136,12 +138,36 @@ body {
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+    display: inline-block;
 }
 
-.btn-primary:hover {
+.btn-primary:hover, a.btn-primary:hover {
     background: #4338CA;
     transform: translateY(-2px);
     box-shadow: 0 10px 20px rgba(79, 70, 229, 0.3);
+}
+
+.btn-trial, a.btn-trial {
+    padding: 0.6rem 1.5rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-trial:hover, a.btn-trial:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(124, 58, 237, 0.3);
 }
 
 .hamburger {

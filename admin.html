@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - TutorNest</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #f0f2f5; }
+        
+        .admin-header {
+            background: linear-gradient(135deg, #1e293b, #334155);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .admin-container {
+            display: flex;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+        
+        .sidebar {
+            width: 250px;
+            background: white;
+            height: calc(100vh - 60px);
+            padding: 1rem 0;
+        }
+        
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .sidebar-item:hover, .sidebar-item.active {
+            background: #f8f9fa;
+            color: #3b82f6;
+            border-left: 3px solid #3b82f6;
+        }
+        
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+        }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1e293b;
+        }
+        
+        .stat-label {
+            color: #64748b;
+            margin-top: 0.5rem;
+        }
+        
+        .data-table {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th {
+            background: #f8f9fa;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: #64748b;
+        }
+        
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        
+        .content-section { display: none; }
+        .content-section.active { display: block; }
+        
+        .btn-action {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            color: white;
+            margin: 0 0.25rem;
+        }
+        .btn-view { background: #3b82f6; }
+        .btn-edit { background: #f59e0b; }
+        .btn-delete { background: #ef4444; }
+    </style>
+</head>
+<body>
+    <!-- Admin Header -->
+    <header class="admin-header">
+        <div style="display: flex; align-items: center; gap: 1rem;">
+            <i class="fas fa-shield-alt" style="font-size: 1.5rem;"></i>
+            <span style="font-size: 1.25rem; font-weight: 700;">TutorNest Admin</span>
+        </div>
+        <button onclick="logout()" style="background: #ef4444; color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer;">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+    </header>
+
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-item active" onclick="showSection('overview', this)">
+                <i class="fas fa-tachometer-alt"></i>
+                <span>Overview</span>
+            </div>
+            <div class="sidebar-item" onclick="showSection('users', this)">
+                <i class="fas fa-users"></i>
+                <span>Users</span>
+            </div>
+            <div class="sidebar-item" onclick="showSection('tutors', this)">
+                <i class="fas fa-chalkboard-teacher"></i>
+                <span>Tutors</span>
+            </div>
+            <div class="sidebar-item" onclick="showSection('bookings', this)">
+                <i class="fas fa-calendar-check"></i>
+                <span>Bookings</span>
+            </div>
+            <div class="sidebar-item" onclick="showSection('payments', this)">
+                <i class="fas fa-dollar-sign"></i>
+                <span>Payments</span>
+            </div>
+            <div class="sidebar-item" onclick="showSection('analytics', this)">
+                <i class="fas fa-chart-line"></i>
+                <span>Analytics</span>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Overview -->
+            <section id="overview" class="content-section active">
+                <h1 style="margin-bottom: 2rem;">Dashboard Overview</h1>
+                
+                <div class="dashboard-grid">
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalUsers">0</div>
+                        <div class="stat-label">Total Users</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">15</div>
+                        <div class="stat-label">Active Tutors</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalRevenue">$0</div>
+                        <div class="stat-label">Total Revenue</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalBookings">0</div>
+                        <div class="stat-label">Total Bookings</div>
+                    </div>
+                </div>
+
+                <div style="background: white; padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem;">
+                    <h2 style="margin-bottom: 1rem;">Revenue Chart</h2>
+                    <canvas id="revenueChart" height="100"></canvas>
+                </div>
+
+                <div class="data-table">
+                    <h2 style="padding: 1rem;">Recent Activities</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>User</th>
+                                <th>Action</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="activities"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Users -->
+            <section id="users" class="content-section">
+                <h1 style="margin-bottom: 2rem;">User Management</h1>
+                <div class="data-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTable"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Tutors -->
+            <section id="tutors" class="content-section">
+                <h1 style="margin-bottom: 2rem;">Tutor Management</h1>
+                <div class="data-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Subjects</th>
+                                <th>Rate</th>
+                                <th>Rating</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tutorsTable"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Bookings -->
+            <section id="bookings" class="content-section">
+                <h1 style="margin-bottom: 2rem;">Bookings</h1>
+                <div class="data-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Tutor</th>
+                                <th>Duration</th>
+                                <th>Topic</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bookingsTable"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Payments -->
+            <section id="payments" class="content-section">
+                <h1 style="margin-bottom: 2rem;">Payments</h1>
+                <div class="data-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>Method</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="paymentsTable"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Analytics -->
+            <section id="analytics" class="content-section">
+                <h1 style="margin-bottom: 2rem;">Analytics</h1>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                    <div style="background: white; padding: 1.5rem; border-radius: 12px;">
+                        <h3>User Growth</h3>
+                        <canvas id="userChart"></canvas>
+                    </div>
+                    <div style="background: white; padding: 1.5rem; border-radius: 12px;">
+                        <h3>Popular Subjects</h3>
+                        <canvas id="subjectChart"></canvas>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAdminAuth();
+            loadDashboardData();
+            initCharts();
+        });
+
+        function checkAdminAuth() {
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            if (user.role !== 'admin' && user.email !== 'admin@tutornest.com') {
+                alert('Admin access required');
+                window.location.href = 'index.html';
+            }
+        }
+
+        function showSection(section, element) {
+            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+            document.getElementById(section).classList.add('active');
+            
+            document.querySelectorAll('.sidebar-item').forEach(item => item.classList.remove('active'));
+            element.classList.add('active');
+            
+            loadSectionData(section);
+        }
+
+        function loadDashboardData() {
+            // Load all data from localStorage
+            const users = JSON.parse(localStorage.getItem('demoStudents') || '[]');
+            const bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
+            const payments = JSON.parse(localStorage.getItem('paymentHistory') || '[]');
+            
+            // Update stats
+            document.getElementById('totalUsers').textContent = users.length + 15; // +15 tutors
+            document.getElementById('totalBookings').textContent = bookings.length;
+            
+            // Calculate revenue
+            let totalRev = 0;
+            payments.forEach(p => totalRev += parseFloat(p.amount || 0));
+            document.getElementById('totalRevenue').textContent = `$${totalRev.toFixed(2)}`;
+            
+            // Load recent activities
+            const activities = document.getElementById('activities');
+            const recentActions = [
+                { time: '2 min ago', user: 'John Smith', action: 'Booked session', status: 'Success' },
+                { time: '5 min ago', user: 'Emma Wilson', action: 'Made payment', status: 'Success' },
+                { time: '10 min ago', user: 'Dr. Sarah', action: 'Started session', status: 'Active' }
+            ];
+            
+            activities.innerHTML = recentActions.map(a => `
+                <tr>
+                    <td>${a.time}</td>
+                    <td>${a.user}</td>
+                    <td>${a.action}</td>
+                    <td><span style="color: #10b981;">${a.status}</span></td>
+                </tr>
+            `).join('');
+        }
+
+        function loadSectionData(section) {
+            switch(section) {
+                case 'users':
+                    loadUsers();
+                    break;
+                case 'tutors':
+                    loadTutors();
+                    break;
+                case 'bookings':
+                    loadBookings();
+                    break;
+                case 'payments':
+                    loadPayments();
+                    break;
+            }
+        }
+
+        function loadUsers() {
+            const users = JSON.parse(localStorage.getItem('demoStudents') || '[]');
+            const tbody = document.getElementById('usersTable');
+            tbody.innerHTML = users.map(u => `
+                <tr>
+                    <td>${u.name}</td>
+                    <td>${u.email}</td>
+                    <td>${u.role}</td>
+                    <td>
+                        <button class="btn-action btn-view">View</button>
+                        <button class="btn-action btn-edit">Edit</button>
+                        <button class="btn-action btn-delete">Delete</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function loadTutors() {
+            fetch('http://localhost:4000/api/tutors')
+                .then(res => res.json())
+                .then(tutors => {
+                    const tbody = document.getElementById('tutorsTable');
+                    tbody.innerHTML = tutors.map(t => `
+                        <tr>
+                            <td>${t.name}</td>
+                            <td>${t.expertise ? t.expertise.join(', ') : 'N/A'}</td>
+                            <td>$${t.hourlyRate}/hr</td>
+                            <td>⭐ ${t.rating}</td>
+                            <td>
+                                <button class="btn-action btn-view">View</button>
+                                <button class="btn-action btn-edit">Edit</button>
+                            </td>
+                        </tr>
+                    `).join('');
+                })
+                .catch(err => {
+                    document.getElementById('tutorsTable').innerHTML = '<tr><td colspan="5">Error loading tutors</td></tr>';
+                });
+        }
+
+        function loadBookings() {
+            const bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
+            const tbody = document.getElementById('bookingsTable');
+            tbody.innerHTML = bookings.map(b => `
+                <tr>
+                    <td>${b.date}</td>
+                    <td>${b.tutorName}</td>
+                    <td>${b.duration} min</td>
+                    <td>${b.topic}</td>
+                    <td>
+                        <button class="btn-action btn-view">View</button>
+                        <button class="btn-action btn-delete">Cancel</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function loadPayments() {
+            const payments = JSON.parse(localStorage.getItem('paymentHistory') || '[]');
+            const tbody = document.getElementById('paymentsTable');
+            tbody.innerHTML = payments.map(p => `
+                <tr>
+                    <td>${p.id}</td>
+                    <td>${new Date(p.timestamp).toLocaleDateString()}</td>
+                    <td>$${p.amount}</td>
+                    <td>${p.method}</td>
+                    <td><span style="color: #10b981;">Completed</span></td>
+                </tr>
+            `).join('');
+        }
+
+        function initCharts() {
+            // Revenue Chart
+            const ctx = document.getElementById('revenueChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [{
+                        label: 'Revenue',
+                        data: [1200, 1900, 1500, 2500, 2200, 3000, 2800],
+                        borderColor: '#3b82f6',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+
+        function logout() {
+            localStorage.removeItem('user');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

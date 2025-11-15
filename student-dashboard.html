@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - TutorNest</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/creative-design.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .dashboard-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .dashboard-header {
+            margin-bottom: 3rem;
+        }
+        .dashboard-header h1 {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+        .dashboard-header p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+        .tutors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .tutor-card {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+        .tutor-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        .tutor-header {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            position: relative;
+        }
+        .tutor-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 4px solid white;
+            display: block;
+            margin: 0 auto;
+        }
+        .online-indicator {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            width: 12px;
+            height: 12px;
+            background: #10b981;
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+        .offline-indicator {
+            background: #6b7280;
+        }
+        .tutor-body {
+            padding: 1.5rem;
+        }
+        .tutor-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--secondary);
+            text-align: center;
+            margin-bottom: 0.25rem;
+        }
+        .tutor-expertise {
+            color: var(--text-light);
+            text-align: center;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+        .tutor-rating {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .tutor-bio {
+            color: var(--text-dark);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            min-height: 60px;
+        }
+        .tutor-stats {
+            display: flex;
+            justify-content: space-around;
+            padding: 1rem 0;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 1rem;
+        }
+        .stat {
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+        }
+        .tutor-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        .tutor-price span {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            font-weight: 400;
+        }
+        .tutor-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .btn-action {
+            flex: 1;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        .btn-chat {
+            background: var(--primary);
+            color: white;
+        }
+        .btn-chat:hover {
+            background: var(--secondary);
+        }
+        .btn-profile {
+            background: var(--background-light);
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+        .btn-profile:hover {
+            background: var(--primary);
+            color: white;
+        }
+        .filters-bar {
+            background: white;
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-sm);
+        }
+        .filters-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .filter-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        .filter-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--secondary);
+        }
+        .filter-select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: white;
+        }
+        .loading-spinner {
+            text-align: center;
+            padding: 4rem;
+        }
+        .loading-spinner i {
+            font-size: 3rem;
+            color: var(--primary);
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Professional Navigation Bar -->
+    <nav class="navbar-creative" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); backdrop-filter: none;">
+        <div class="container nav-container-creative">
+            <a href="index.html" class="nav-logo-creative" style="color: white; font-size: 28px;">🎓 TutorNest</a>
+            <div class="nav-menu-creative">
+                <a href="find-tutors.html" style="color: white; opacity: 0.9;">Find Tutors</a>
+                <a href="instant-classes.html" style="color: white; opacity: 0.9;">Instant Help</a>
+                <a href="chat-learn.html" style="color: white; opacity: 0.9;">Chat & Learn</a>
+                <a href="#" onclick="showMyBookings()" style="color: white; opacity: 0.9;">My Bookings</a>
+                <a href="payment-history.html" style="color: white; opacity: 0.9;">Payments</a>
+            </div>
+            <div class="nav-buttons-creative">
+                <span style="color: white; margin-right: 1rem;">Welcome, <span id="userNameNav">Student</span>!</span>
+                <button onclick="logout()" class="btn" style="background: white; color: #667eea; font-weight: 600;">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Container -->
+    <div class="dashboard-container" style="margin-top: 100px; min-height: 100vh; padding: 2rem 0 3rem; background: radial-gradient(circle at top left, rgba(102,126,234,0.08), transparent 55%), radial-gradient(circle at top right, rgba(118,75,162,0.12), transparent 55%), #f3f4f6;">
+        <!-- Dashboard Header -->
+        <div class="dashboard-header">
+            <h1>Welcome back, <span id="userName">Student</span>! 👋</h1>
+        </div>
+
+        <!-- Filters Bar -->
+        <div class="filters-bar">
+            <div class="filters-row">
+                <div class="filter-group">
+                    <label class="filter-label">Subject</label>
+                    <select class="filter-select" id="subjectFilter">
+                        <option value="">All Subjects</option>
+                        <option value="Mathematics">Mathematics</option>
+                        <option value="Computer Science">Computer Science</option>
+                        <option value="Biology">Biology</option>
+                        <option value="Chemistry">Chemistry</option>
+                        <option value="English">English</option>
+                        <option value="Physics">Physics</option>
+                        <option value="Languages">Languages</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Availability</label>
+                    <select class="filter-select" id="availabilityFilter">
+                        <option value="">All Tutors</option>
+                        <option value="online">Online Now</option>
+                        <option value="offline">Offline</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Price Range</label>
+                    <select class="filter-select" id="priceFilter">
+                        <option value="">All Prices</option>
+                        <option value="0-50">$0-$50/hr</option>
+                        <option value="50-75">$50-$75/hr</option>
+                        <option value="75-100">$75-$100/hr</option>
+                        <option value="100+">$100+/hr</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading Spinner -->
+        <div class="loading-spinner" id="loadingSpinner">
+            <i class="fas fa-spinner"></i>
+            <p>Loading amazing tutors...</p>
+        </div>
+
+        <!-- Tutors Grid -->
+        <div class="tutors-grid" id="tutorsGrid" style="display: none;">
+            <!-- Tutor cards will be dynamically inserted here -->
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let allTutors = [];
+        let filteredTutors = [];
+
+        // Initialize dashboard on page load
+        document.addEventListener('DOMContentLoaded', async function() {
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            
+            // Update user names in multiple places
+            if (user.firstName) {
+                document.getElementById('userName').textContent = user.firstName;
+                document.getElementById('userNameNav').textContent = user.firstName;
+            }
+            
+            // Check if logged in
+            if (!user.email) {
+                alert('Please log in first');
+                window.location.href = 'auth/login.html';
+                return;
+            }
+            
+            // Load tutors from backend
+            await loadTutors();
+            
+            // Set up filter listeners
+            document.getElementById('subjectFilter').addEventListener('change', applyFilters);
+            document.getElementById('availabilityFilter').addEventListener('change', applyFilters);
+            document.getElementById('priceFilter').addEventListener('change', applyFilters);
+        });
+
+        // Load tutors from backend API
+        async function loadTutors() {
+            const spinner = document.getElementById('loadingSpinner');
+            const grid = document.getElementById('tutorsGrid');
+            
+            try {
+                const response = await fetch('http://localhost:4000/api/tutors');
+                if (!response.ok) throw new Error('Failed to fetch tutors');
+                
+                allTutors = await response.json();
+                filteredTutors = allTutors;
+                
+                // Hide spinner and show grid
+                spinner.style.display = 'none';
+                grid.style.display = 'grid';
+                
+                // Display tutors
+                displayTutors(filteredTutors);
+                
+            } catch (error) {
+                console.error('Error loading tutors:', error);
+                spinner.innerHTML = '<p>Error loading tutors. Please make sure the backend is running on port 4000.</p>';
+            }
+        }
+
+        // Display tutors in the grid
+        function displayTutors(tutors) {
+            const grid = document.getElementById('tutorsGrid');
+            
+            if (tutors.length === 0) {
+                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center;">No tutors found matching your criteria.</p>';
+                return;
+            }
+            
+            grid.innerHTML = tutors.map(tutor => createTutorCard(tutor)).join('');
+        }
+
+        // Create HTML for a single tutor card
+        function createTutorCard(tutor) {
+            const stars = '⭐'.repeat(Math.round(tutor.rating));
+            const expertise = tutor.expertise ? tutor.expertise.slice(0, 3).join(', ') : 'General';
+            
+            return `
+                <div class="tutor-card">
+                    <div class="tutor-header">
+                        <img src="${tutor.avatar}" alt="${tutor.name}" class="tutor-avatar">
+                        <span class="${tutor.isOnline ? 'online-indicator' : 'online-indicator offline-indicator'}"></span>
+                    </div>
+                    <div class="tutor-body">
+                        <h3 class="tutor-name">${tutor.name}</h3>
+                        <p class="tutor-expertise">${expertise}</p>
+                        <div class="tutor-rating">
+                            <span>${stars}</span>
+                            <span>${tutor.rating.toFixed(1)}</span>
+                        </div>
+                        <p class="tutor-bio">${tutor.bio}</p>
+                        <div class="tutor-stats">
+                            <div class="stat">
+                                <div class="stat-value">${tutor.sessions.toLocaleString()}</div>
+                                <div class="stat-label">Sessions</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">${tutor.experience}</div>
+                                <div class="stat-label">Years Exp</div>
+                            </div>
+                        </div>
+                        <div class="tutor-price">
+                            $${tutor.hourlyRate}<span>/hour</span>
+                        </div>
+                        <div class="tutor-actions">
+                            <button class="btn-action btn-book" style="background: #10b981; color: white; flex: 2;" onclick="bookTutor('${tutor.id}', '${tutor.name}', ${tutor.hourlyRate})">
+                                <i class="fas fa-calendar-check"></i> Book Now
+                            </button>
+                            <button class="btn-action btn-chat" onclick="startChatWithTutor('${tutor.id}', '${tutor.name}')">
+                                <i class="fas fa-comments"></i> Chat
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Apply filters
+        function applyFilters() {
+            const subjectFilter = document.getElementById('subjectFilter').value.toLowerCase();
+            const availabilityFilter = document.getElementById('availabilityFilter').value;
+            const priceFilter = document.getElementById('priceFilter').value;
+            
+            filteredTutors = allTutors.filter(tutor => {
+                // Subject filter
+                if (subjectFilter && tutor.expertise) {
+                    const hasSubject = tutor.expertise.some(exp => 
+                        exp.toLowerCase().includes(subjectFilter)
+                    );
+                    if (!hasSubject) return false;
+                }
+                
+                // Availability filter
+                if (availabilityFilter === 'online' && !tutor.isOnline) return false;
+                if (availabilityFilter === 'offline' && tutor.isOnline) return false;
+                
+                // Price filter
+                if (priceFilter) {
+                    const price = tutor.hourlyRate;
+                    if (priceFilter === '0-50' && price > 50) return false;
+                    if (priceFilter === '50-75' && (price < 50 || price > 75)) return false;
+                    if (priceFilter === '75-100' && (price < 75 || price > 100)) return false;
+                    if (priceFilter === '100+' && price < 100) return false;
+                }
+                
+                return true;
+            });
+            
+            displayTutors(filteredTutors);
+        }
+
+        // Start chat with tutor
+        function startChatWithTutor(tutorId, tutorName) {
+            // Store the selected tutor in session storage
+            sessionStorage.setItem('selectedTutor', JSON.stringify({ id: tutorId, name: tutorName }));
+            // Navigate to chat page
+            window.location.href = 'chat-learn.html';
+        }
+
+        // View tutor profile
+        function viewTutorProfile(tutorId, tutorName) {
+            alert(`Opening profile for ${tutorName}... (Profile page coming soon!)`);
+            // In a real app, this would navigate to a tutor profile page
+            // window.location.href = `tutor-profile.html?id=${tutorId}`;
+        }
+
+        // Book a tutor - NEW FUNCTION
+        function bookTutor(tutorId, tutorName, hourlyRate) {
+            // Create booking modal
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0,0,0,0.5);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 10000;
+            `;
+            
+            const modalContent = document.createElement('div');
+            modalContent.style.cssText = `
+                background: white;
+                padding: 2rem;
+                border-radius: 12px;
+                width: 90%;
+                max-width: 500px;
+                box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            `;
+            
+            // Get tomorrow's date as default
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            const dateStr = tomorrow.toISOString().split('T')[0];
+            
+            modalContent.innerHTML = `
+                <h2 style="margin-bottom: 1.5rem; color: #1e293b;">📅 Book Session with ${tutorName}</h2>
+                
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Select Date:</label>
+                    <input type="date" id="bookingDate" value="${dateStr}" min="${dateStr}" 
+                           style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 8px;">
+                </div>
+                
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Select Time:</label>
+                    <select id="bookingTime" style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 8px;">
+                        <option value="09:00">9:00 AM</option>
+                        <option value="10:00">10:00 AM</option>
+                        <option value="11:00">11:00 AM</option>
+                        <option value="12:00">12:00 PM</option>
+                        <option value="13:00">1:00 PM</option>
+                        <option value="14:00">2:00 PM</option>
+                        <option value="15:00">3:00 PM</option>
+                        <option value="16:00" selected>4:00 PM</option>
+                        <option value="17:00">5:00 PM</option>
+                        <option value="18:00">6:00 PM</option>
+                        <option value="19:00">7:00 PM</option>
+                        <option value="20:00">8:00 PM</option>
+                    </select>
+                </div>
+                
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Session Duration:</label>
+                    <select id="bookingDuration" style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 8px;">
+                        <option value="30">30 minutes</option>
+                        <option value="60" selected>1 hour</option>
+                        <option value="90">1.5 hours</option>
+                        <option value="120">2 hours</option>
+                    </select>
+                </div>
+                
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Subject/Topic:</label>
+                    <input type="text" id="bookingTopic" placeholder="e.g., Calculus, Essay Writing, etc." 
+                           style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 8px;">
+                </div>
+                
+                <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
+                    <p style="margin: 0; font-weight: 600; color: #1e293b;">💰 Session Cost:</p>
+                    <p id="sessionCost" style="margin: 0.5rem 0 0 0; font-size: 1.5rem; color: #10b981;">$${hourlyRate}</p>
+                </div>
+                
+                <div style="display: flex; gap: 1rem;">
+                    <button onclick="confirmBooking('${tutorId}', '${tutorName}')" 
+                            style="flex: 1; padding: 1rem; background: #10b981; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                        ✅ Confirm Booking
+                    </button>
+                    <button onclick="this.closest('[style*=\"position: fixed\"]').remove()" 
+                            style="flex: 1; padding: 1rem; background: #f1f5f9; color: #64748b; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                        Cancel
+                    </button>
+                </div>
+            `;
+            
+            modal.appendChild(modalContent);
+            document.body.appendChild(modal);
+            
+            // Update cost when duration changes
+            document.getElementById('bookingDuration').addEventListener('change', function() {
+                const duration = parseInt(this.value);
+                const cost = (hourlyRate * duration / 60).toFixed(2);
+                document.getElementById('sessionCost').textContent = '$' + cost;
+            });
+        }
+        
+        // Confirm booking
+        function confirmBooking(tutorId, tutorName) {
+            const date = document.getElementById('bookingDate').value;
+            const time = document.getElementById('bookingTime').value;
+            const duration = document.getElementById('bookingDuration').value;
+            const topic = document.getElementById('bookingTopic').value || 'General Tutoring';
+            
+            // Store booking in localStorage
+            const booking = {
+                tutorId,
+                tutorName,
+                date,
+                time,
+                duration,
+                topic,
+                timestamp: new Date().toISOString()
+            };
+            
+            let bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
+            bookings.push(booking);
+            localStorage.setItem('bookings', JSON.stringify(bookings));
+            
+            // Remove modal
+            document.querySelector('[style*="position: fixed"]').remove();
+            
+            // Show success message
+            const successModal = document.createElement('div');
+            successModal.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: white;
+                padding: 2rem;
+                border-radius: 12px;
+                box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+                z-index: 10001;
+                text-align: center;
+            `;
+            
+            successModal.innerHTML = `
+                <div style="font-size: 3rem; margin-bottom: 1rem;">✅</div>
+                <h2 style="color: #10b981; margin-bottom: 1rem;">Booking Confirmed!</h2>
+                <p style="color: #64748b; margin-bottom: 1rem;">
+                    Your session with <strong>${tutorName}</strong> is scheduled for<br>
+                    <strong>${new Date(date).toLocaleDateString()} at ${time}</strong>
+                </p>
+                <p style="color: #64748b; margin-bottom: 1.5rem;">
+                    📧 You'll receive a confirmation email with session details and payment instructions.
+                </p>
+                <button onclick="window.location.href='chat-learn.html'" 
+                        style="padding: 0.75rem 2rem; background: #3b82f6; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; margin-right: 1rem;">
+                    💬 Message ${tutorName}
+                </button>
+                <button onclick="this.parentElement.remove()" 
+                        style="padding: 0.75rem 2rem; background: #f1f5f9; color: #64748b; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                    Close
+                </button>
+            `;
+            
+            document.body.appendChild(successModal);
+            
+            // Auto-close after 5 seconds
+            setTimeout(() => {
+                if (successModal.parentElement) {
+                    successModal.remove();
+                }
+            }, 5000);
+        }
+
+        // Show My Bookings
+        function showMyBookings() {
+            const bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
+            
+            if (bookings.length === 0) {
+                alert('You have no bookings yet. Click "Book Now" on any tutor to schedule a session!');
+                return;
+            }
+            
+            // Create modal to show bookings
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0,0,0,0.5);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 10000;
+            `;
+            
+            const content = document.createElement('div');
+            content.style.cssText = `
+                background: white;
+                padding: 2rem;
+                border-radius: 12px;
+                width: 90%;
+                max-width: 600px;
+                max-height: 70vh;
+                overflow-y: auto;
+                box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            `;
+            
+            let bookingsHTML = `
+                <h2 style="margin-bottom: 1.5rem;">📚 My Bookings</h2>
+                <div style="display: flex; flex-direction: column; gap: 1rem;">
+            `;
+            
+            bookings.forEach((booking, index) => {
+                const date = new Date(booking.date);
+                bookingsHTML += `
+                    <div style="padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #667eea;">
+                        <div style="display: flex; justify-content: space-between; align-items: start;">
+                            <div>
+                                <h3 style="margin: 0 0 0.5rem 0; color: #1e293b;">${booking.tutorName}</h3>
+                                <p style="margin: 0.25rem 0; color: #64748b;">
+                                    <i class="fas fa-calendar"></i> ${date.toLocaleDateString()}
+                                    <i class="fas fa-clock" style="margin-left: 1rem;"></i> ${booking.time}
+                                </p>
+                                <p style="margin: 0.25rem 0; color: #64748b;">
+                                    <i class="fas fa-book"></i> ${booking.topic}
+                                    <i class="fas fa-hourglass" style="margin-left: 1rem;"></i> ${booking.duration} minutes
+                                </p>
+                            </div>
+                            <button onclick="cancelBooking(${index})" style="padding: 0.5rem 1rem; background: #ef4444; color: white; border: none; border-radius: 6px; cursor: pointer;">
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            bookingsHTML += `
+                </div>
+                <button onclick="this.closest('[style*=\"position: fixed\"]').remove()" 
+                        style="margin-top: 1.5rem; width: 100%; padding: 1rem; background: #667eea; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                    Close
+                </button>
+            `;
+            
+            content.innerHTML = bookingsHTML;
+            modal.appendChild(content);
+            document.body.appendChild(modal);
+        }
+        
+        // Cancel a booking
+        function cancelBooking(index) {
+            if (confirm('Are you sure you want to cancel this booking?')) {
+                let bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
+                bookings.splice(index, 1);
+                localStorage.setItem('bookings', JSON.stringify(bookings));
+                document.querySelector('[style*="position: fixed"]').remove();
+                showMyBookings(); // Refresh the bookings display
+            }
+        }
+        
+        // Logout function
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('user');
+                localStorage.removeItem('authToken');
+                window.location.href = 'index.html';
+            }
+        }
+    </script>
+    <script src="js/dashboard-fix.js"></script>
+    <script src="js/payment-system.js"></script>
+    <script>
+        // Override confirmBooking to include payment
+        const originalConfirmBooking = window.confirmBooking;
+        window.confirmBooking = function(tutorId, tutorName) {
+            const date = document.getElementById('bookingDate').value;
+            const time = document.getElementById('bookingTime').value;
+            const duration = document.getElementById('bookingDuration').value;
+            const topic = document.getElementById('bookingTopic').value || 'General Tutoring';
+            
+            // Get hourly rate from the tutor
+            const hourlyRate = allTutors.find(t => t.id === tutorId)?.hourlyRate || 65;
+            
+            // Create booking object
+            const booking = {
+                tutorId,
+                tutorName,
+                date,
+                time,
+                duration: parseInt(duration),
+                topic,
+                hourlyRate,
+                timestamp: new Date().toISOString()
+            };
+            
+            // Remove booking modal
+            document.querySelector('[style*="position: fixed"]').remove();
+            
+            // Show payment modal
+            paymentSystem.showPaymentModal(booking);
+        };
+    </script>
+</body>
+</html>

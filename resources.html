@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resources - TutorNest</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/professional.css">
+    <style>
+        .resources-hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 4rem 0;
+            color: white;
+            text-align: center;
+        }
+        .resources-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        .resources-grid {
+            max-width: 1400px;
+            margin: 4rem auto;
+            padding: 0 1rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .resource-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+        .resource-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-main">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="logo-text">TutorNest</div>
+                </a>
+                
+                <nav class="nav-menu">
+                    <a href="student-dashboard.html">Dashboard</a>
+                    <a href="index.html#subjects">Subjects</a>
+                    <a href="#" class="active">Resources</a>
+                </nav>
+                
+                <div class="header-actions">
+                    <a href="student-dashboard.html" class="btn btn-primary">Go to Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="resources-hero">
+        <h1>📚 Learning Resources</h1>
+        <p>Free study guides, practice tests, and learning materials</p>
+    </section>
+
+    <!-- Resources Grid -->
+    <div class="resources-grid">
+        <div class="resource-card">
+            <div class="resource-icon">
+                <i class="fas fa-book-open"></i>
+            </div>
+            <h3>Study Guides</h3>
+            <p>Comprehensive guides for all subjects including math, science, and languages.</p>
+            <button class="btn btn-primary" style="margin-top: 1rem;">Browse Guides</button>
+        </div>
+
+        <div class="resource-card">
+            <div class="resource-icon">
+                <i class="fas fa-clipboard-check"></i>
+            </div>
+            <h3>Practice Tests</h3>
+            <p>SAT, ACT, GRE, and subject-specific practice tests with instant scoring.</p>
+            <button class="btn btn-primary" style="margin-top: 1rem;">Start Practice</button>
+        </div>
+
+        <div class="resource-card">
+            <div class="resource-icon">
+                <i class="fas fa-video"></i>
+            </div>
+            <h3>Video Lessons</h3>
+            <p>Thousands of video tutorials covering every topic from K-12 to college level.</p>
+            <button class="btn btn-primary" style="margin-top: 1rem;">Watch Videos</button>
+        </div>
+
+        <div class="resource-card">
+            <div class="resource-icon">
+                <i class="fas fa-calculator"></i>
+            </div>
+            <h3>Math Solver</h3>
+            <p>Step-by-step solutions for algebra, calculus, and statistics problems.</p>
+            <button class="btn btn-primary" style="margin-top: 1rem;">Solve Problems</button>
+        </div>
+
+        <div class="resource-card">
+            <div class="resource-icon">
+                <i class="fas fa-file-alt"></i>
+            </div>
+            <h3>Essay Helper</h3>
+            <p>Writing tips, templates, and feedback for essays and research papers.</p>
+            <button class="btn btn-primary" style="margin-top: 1rem;">Write Better</button>
+        </div>
+
+        <div class="resource-card">
+            <div class="resource-icon">
+                <i class="fas fa-question-circle"></i>
+            </div>
+            <h3>Q&A Forum</h3>
+            <p>Get answers from expert tutors and fellow students in our community.</p>
+            <button class="btn btn-primary" style="margin-top: 1rem;">Ask Question</button>
+        </div>
+    </div>
+
+    <script src="js/dashboard-fix.js"></script>
+</body>
+</html>

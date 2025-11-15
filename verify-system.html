@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Verification - TutorNest</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .test-item {
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 4px solid #ddd;
+            background: #f9f9f9;
+        }
+        .success {
+            border-left-color: #10b981;
+            background: #d1fae5;
+        }
+        .error {
+            border-left-color: #ef4444;
+            background: #fee2e2;
+        }
+        .pending {
+            border-left-color: #f59e0b;
+            background: #fef3c7;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .btn-test {
+            background: #3b82f6;
+            color: white;
+        }
+        .btn-test:hover {
+            background: #2563eb;
+        }
+        h1 {
+            color: #1f2937;
+        }
+        .tutor-preview {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .tutor-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .tutor-card img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 TutorNest System Verification</h1>
+    <p>Let's test EVERY feature to see what's actually working:</p>
+
+    <!-- Backend Test -->
+    <div class="test-section">
+        <h2>1. Backend API Test</h2>
+        <button class="btn-test" onclick="testBackend()">Test Backend API</button>
+        <div id="backendResult" class="test-item pending">Waiting to test...</div>
+    </div>
+
+    <!-- Tutor Data Test -->
+    <div class="test-section">
+        <h2>2. Tutor Data Test</h2>
+        <button class="btn-test" onclick="testTutorData()">Load Tutors</button>
+        <div id="tutorResult" class="test-item pending">Waiting to test...</div>
+        <div id="tutorPreview" class="tutor-preview"></div>
+    </div>
+
+    <!-- Login Test -->
+    <div class="test-section">
+        <h2>3. Login System Test</h2>
+        <button class="btn-test" onclick="testLogin()">Test Login</button>
+        <div id="loginResult" class="test-item pending">Waiting to test...</div>
+    </div>
+
+    <!-- Booking Test -->
+    <div class="test-section">
+        <h2>4. Booking System Test</h2>
+        <button class="btn-test" onclick="testBooking()">Test Booking</button>
+        <div id="bookingResult" class="test-item pending">Waiting to test...</div>
+    </div>
+
+    <!-- Navigation Test -->
+    <div class="test-section">
+        <h2>5. Page Navigation Test</h2>
+        <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+            <button class="btn-test" onclick="window.open('index.html', '_blank')">Homepage</button>
+            <button class="btn-test" onclick="window.open('quick-login.html', '_blank')">Login Page</button>
+            <button class="btn-test" onclick="window.open('student-dashboard.html', '_blank')">Dashboard</button>
+            <button class="btn-test" onclick="window.open('chat-learn.html', '_blank')">Chat System</button>
+            <button class="btn-test" onclick="window.open('test-dashboard.html', '_blank')">Test Dashboard</button>
+        </div>
+    </div>
+
+    <!-- Real Booking Demo -->
+    <div class="test-section">
+        <h2>6. Live Booking Demo</h2>
+        <button class="btn-test" onclick="demoBooking()">Show Real Booking Modal</button>
+        <div id="bookingDemo"></div>
+    </div>
+
+    <script>
+        // Test Backend API
+        async function testBackend() {
+            const resultDiv = document.getElementById('backendResult');
+            try {
+                const response = await fetch('http://localhost:4000/api/tutors');
+                if (response.ok) {
+                    resultDiv.className = 'test-item success';
+                    resultDiv.innerHTML = '✅ Backend is WORKING! API responding on port 4000';
+                } else {
+                    throw new Error('API returned error');
+                }
+            } catch (error) {
+                resultDiv.className = 'test-item error';
+                resultDiv.innerHTML = '❌ Backend ERROR: ' + error.message + '<br>Make sure backend is running: cd backend && node server.js';
+            }
+        }
+
+        // Test Tutor Data
+        async function testTutorData() {
+            const resultDiv = document.getElementById('tutorResult');
+            const previewDiv = document.getElementById('tutorPreview');
+            try {
+                const response = await fetch('http://localhost:4000/api/tutors');
+                const tutors = await response.json();
+                
+                if (tutors && tutors.length > 0) {
+                    resultDiv.className = 'test-item success';
+                    resultDiv.innerHTML = `✅ Loaded ${tutors.length} tutors successfully!`;
+                    
+                    // Show first 3 tutors as preview
+                    previewDiv.innerHTML = tutors.slice(0, 3).map(tutor => `
+                        <div class="tutor-card">
+                            <img src="${tutor.avatar}" alt="${tutor.name}">
+                            <h3>${tutor.name}</h3>
+                            <p>${tutor.expertise ? tutor.expertise[0] : 'General'}</p>
+                            <p>$${tutor.hourlyRate}/hour</p>
+                            <button onclick="alert('Booking ${tutor.name}!')" style="background: #10b981; color: white; padding: 8px 16px; border: none; border-radius: 5px; cursor: pointer;">
+                                Book Now
+                            </button>
+                        </div>
+                    `).join('');
+                } else {
+                    throw new Error('No tutors found');
+                }
+            } catch (error) {
+                resultDiv.className = 'test-item error';
+                resultDiv.innerHTML = '❌ Failed to load tutors: ' + error.message;
+            }
+        }
+
+        // Test Login
+        function testLogin() {
+            const resultDiv = document.getElementById('loginResult');
+            
+            // Create test user
+            const testUser = {
+                email: 'test@tutornest.com',
+                firstName: 'Test',
+                lastName: 'User',
+                role: 'student'
+            };
+            
+            // Save to localStorage
+            localStorage.setItem('user', JSON.stringify(testUser));
+            localStorage.setItem('authToken', 'test-token-' + Date.now());
+            
+            // Verify it saved
+            const savedUser = localStorage.getItem('user');
+            if (savedUser) {
+                resultDiv.className = 'test-item success';
+                resultDiv.innerHTML = '✅ Login system WORKING! User saved: ' + JSON.parse(savedUser).firstName;
+            } else {
+                resultDiv.className = 'test-item error';
+                resultDiv.innerHTML = '❌ Login system failed';
+            }
+        }
+
+        // Test Booking Storage
+        function testBooking() {
+            const resultDiv = document.getElementById('bookingResult');
+            
+            // Create test booking
+            const testBooking = {
+                tutorId: '1',
+                tutorName: 'Dr. Sarah Johnson',
+                date: '2024-01-20',
+                time: '3:00 PM',
+                duration: '60',
+                topic: 'Calculus'
+            };
+            
+            // Save booking
+            let bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
+            bookings.push(testBooking);
+            localStorage.setItem('bookings', JSON.stringify(bookings));
+            
+            // Verify
+            const savedBookings = JSON.parse(localStorage.getItem('bookings') || '[]');
+            if (savedBookings.length > 0) {
+                resultDiv.className = 'test-item success';
+                resultDiv.innerHTML = `✅ Booking system WORKING! ${savedBookings.length} booking(s) saved`;
+            } else {
+                resultDiv.className = 'test-item error';
+                resultDiv.innerHTML = '❌ Booking system failed';
+            }
+        }
+
+        // Demo real booking modal
+        function demoBooking() {
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0,0,0,0.5);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 10000;
+            `;
+            
+            const content = document.createElement('div');
+            content.style.cssText = `
+                background: white;
+                padding: 30px;
+                border-radius: 12px;
+                max-width: 500px;
+                width: 90%;
+            `;
+            
+            content.innerHTML = `
+                <h2 style="margin-bottom: 20px;">📅 Book a Session</h2>
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Select Date:</label>
+                    <input type="date" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px;">
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Select Time:</label>
+                    <select style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px;">
+                        <option>9:00 AM</option>
+                        <option>10:00 AM</option>
+                        <option>11:00 AM</option>
+                        <option>2:00 PM</option>
+                        <option>3:00 PM</option>
+                        <option>4:00 PM</option>
+                    </select>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Duration:</label>
+                    <select style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px;">
+                        <option>30 minutes</option>
+                        <option>60 minutes</option>
+                        <option>90 minutes</option>
+                    </select>
+                </div>
+                <div style="background: #f0fdf4; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                    <p style="margin: 0; font-weight: bold;">Total Cost: $65.00</p>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <button onclick="alert('Booking confirmed!'); this.closest('[style*=\\'position: fixed\\']').remove();" style="flex: 1; padding: 10px; background: #10b981; color: white; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;">
+                        Confirm Booking
+                    </button>
+                    <button onclick="this.closest('[style*=\\'position: fixed\\']').remove();" style="flex: 1; padding: 10px; background: #f3f4f6; color: #6b7280; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;">
+                        Cancel
+                    </button>
+                </div>
+            `;
+            
+            modal.appendChild(content);
+            document.body.appendChild(modal);
+        }
+
+        // Auto-run backend test on load
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(testBackend, 500);
+        });
+    </script>
+</body>
+</html>

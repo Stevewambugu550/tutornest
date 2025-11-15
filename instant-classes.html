@@ -276,5 +276,38 @@
     <div class="notification-container" id="notificationContainer"></div>
 
     <script src="js/instant-classes.js"></script>
+    <script src="js/dashboard-fix.js"></script>
+    <script>
+        // Fix instant help connections
+        document.querySelectorAll('.btn-instant-class').forEach(btn => {
+            btn.onclick = function() {
+                showToast('Connecting to tutor...', 'success');
+                setTimeout(() => {
+                    window.location.href = 'chat-learn.html';
+                }, 1000);
+            };
+        });
+        
+        document.querySelectorAll('.btn-instant-chat').forEach(btn => {
+            btn.onclick = function() {
+                showToast('Opening chat...', 'success');
+                setTimeout(() => {
+                    window.location.href = 'chat-learn.html';
+                }, 1000);
+            };
+        });
+        
+        document.querySelector('.btn-emergency-help').onclick = function() {
+            const input = document.querySelector('.emergency-input').value;
+            if (input) {
+                showToast('Finding emergency tutor...', 'info');
+                setTimeout(() => {
+                    window.location.href = 'chat-learn.html';
+                }, 1500);
+            } else {
+                showToast('Please describe what you need help with', 'error');
+            }
+        };
+    </script>
 </body>
 </html>

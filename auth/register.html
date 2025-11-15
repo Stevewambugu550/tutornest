@@ -273,6 +273,93 @@
         </div>
     </div>
     
+    <script>
+        // Quick inline registration handler for immediate functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Account type switching
+            const typeBtns = document.querySelectorAll('.type-btn');
+            const forms = {
+                student: document.getElementById('student-form'),
+                tutor: document.getElementById('tutor-form'),
+                parent: document.getElementById('parent-form')
+            };
+            
+            typeBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const type = this.dataset.type;
+                    
+                    // Update buttons
+                    typeBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Update forms
+                    Object.values(forms).forEach(form => form?.classList.remove('active'));
+                    if (forms[type]) {
+                        forms[type].classList.add('active');
+                    }
+                });
+            });
+            
+            // Form submissions
+            const studentForm = document.getElementById('student-form');
+            const tutorForm = document.getElementById('tutor-form');
+            const parentForm = document.getElementById('parent-form');
+            
+            if (studentForm) {
+                studentForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const formData = new FormData(this);
+                    const user = {
+                        firstName: formData.get('firstName'),
+                        lastName: formData.get('lastName'),
+                        email: formData.get('email'),
+                        role: 'student',
+                        gradeLevel: formData.get('gradeLevel'),
+                        isLoggedIn: true
+                    };
+                    
+                    // Save to localStorage
+                    localStorage.setItem('user', JSON.stringify(user));
+                    localStorage.setItem('authToken', 'demo_token_' + Date.now());
+                    
+                    alert('Student account created successfully!');
+                    window.location.href = '../index.html';
+                });
+            }
+            
+            if (tutorForm) {
+                tutorForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    alert('Redirecting to complete tutor application...');
+                    window.location.href = '../tutor-application.html';
+                });
+            }
+            
+            if (parentForm) {
+                parentForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const formData = new FormData(this);
+                    const user = {
+                        firstName: formData.get('parentFirstName'),
+                        lastName: formData.get('parentLastName'),
+                        email: formData.get('email'),
+                        role: 'parent',
+                        childName: formData.get('childName'),
+                        isLoggedIn: true
+                    };
+                    
+                    localStorage.setItem('user', JSON.stringify(user));
+                    localStorage.setItem('authToken', 'demo_token_' + Date.now());
+                    
+                    alert('Parent account created successfully!');
+                    window.location.href = '../index.html';
+                });
+            }
+        });
+    </script>
+    
     <script src="../js/auth.js"></script>
 </body>
 </html>

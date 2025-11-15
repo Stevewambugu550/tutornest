@@ -10,8 +10,8 @@ const API_CONFIG = {
     },
     production: {
         // Replace with your actual backend URL after deployment
-        baseURL: 'https://tutornest-api.netlify.app/api', // Or your custom domain
-        websocketURL: 'wss://tutornest-api.netlify.app',
+        baseURL: 'http://localhost:4000/api', // REAL Local Backend
+        websocketURL: 'ws://localhost:4000', // REAL Local WebSocket
         cdnURL: 'https://tutornest-cdn.netlify.app'
     }
 };

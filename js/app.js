@@ -72,24 +72,13 @@ function updateNavForLoggedInUser(user) {
     const navButtons = document.querySelector('.nav-buttons');
     if (navButtons) {
         navButtons.innerHTML = `
-            <div class="user-menu">
-                <img src="${user.avatar || 'https://i.pravatar.cc/40'}" alt="Profile" class="user-avatar">
-                <span>${user.firstName}</span>
-                <div class="dropdown-menu">
-                    <a href="${user.role === 'tutor' ? 'tutor-dashboard.html' : 'student-dashboard.html'}">
-                        <i class="fas fa-tachometer-alt"></i> Dashboard
-                    </a>
-                    <a href="messages.html">
-                        <i class="fas fa-envelope"></i> Messages
-                    </a>
-                    <a href="settings.html">
-                        <i class="fas fa-cog"></i> Settings
-                    </a>
-                    <button onclick="logout()">
-                        <i class="fas fa-sign-out-alt"></i> Logout
-                    </button>
-                </div>
-            </div>
+            <span style="margin-right: 1rem;">Welcome, ${user.firstName || 'User'}!</span>
+            <a href="${user.role === 'tutor' ? 'tutor-dashboard.html' : 'student-dashboard.html'}" class="btn-primary" style="padding: 0.5rem 1rem; font-size: 0.875rem;">
+                <i class="fas fa-tachometer-alt"></i> Dashboard
+            </a>
+            <button onclick="logout()" class="btn-login" style="padding: 0.5rem 1rem; font-size: 0.875rem;">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
         `;
     }
 }

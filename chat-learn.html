@@ -280,38 +280,20 @@
                     <input type="text" placeholder="Ask me anything...">
                     <button><i class="fas fa-arrow-right"></i></button>
                 </div>
-            </div>
-        </aside>
-    </div>
-    
-    <!-- Video Call Modal (Hidden by default) -->
-    <div class="video-call-modal" id="videoCallModal" style="display: none;">
-        <div class="video-container">
-            <video id="remoteVideo" class="remote-video" autoplay></video>
-            <video id="localVideo" class="local-video" autoplay muted></video>
-            
-            <div class="video-controls">
-                <button class="btn-control" id="toggleMic">
-                    <i class="fas fa-microphone"></i>
-                </button>
-                <button class="btn-control" id="toggleCamera">
-                    <i class="fas fa-video"></i>
-                </button>
-                <button class="btn-control" id="shareScreen">
-                    <i class="fas fa-desktop"></i>
-                </button>
-                <button class="btn-control" id="openWhiteboard">
-                    <i class="fas fa-chalkboard"></i>
-                </button>
-                <button class="btn-control end-call" id="endCall">
-                    <i class="fas fa-phone-slash"></i>
-                </button>
-            </div>
         </div>
-    </div>
-    
-    <!-- Interactive Whiteboard Modal -->
-    <div class="whiteboard-modal" id="whiteboardModal" style="display: none;">
+        
+        <!-- Video Call Modal (Hidden by default) -->
+        <div id="videoCallModal" class="modal" style="display: none;">
+            <div class="modal-content video-call-content">
+                <div class="video-grid">
+                    <div class="video-container">
+                        <video id="localVideo" autoplay muted></video>
+                        <span class="video-label">You</span>
+                    </div>
+                    <div class="video-container">
+                        <video id="remoteVideo" autoplay></video>
+                        <span class="video-label">Tutor</span>
+                    </div>
         <div class="whiteboard-container">
             <div class="whiteboard-header">
                 <h3>Interactive Whiteboard</h3>
@@ -380,6 +362,38 @@
         </div>
     </div>
     
+    <!-- Video Call Modal (Hidden by default) -->
+    <div class="video-call-modal" id="videoCallModal" style="display: none;">
+        <div class="video-container">
+            <!-- Remote Video (Placeholder) -->
+            <div class="remote-video-placeholder">
+                <i class="fas fa-user-circle"></i>
+                <p>Dr. Sarah Johnson</p>
+                <span>Connecting...</span>
+            </div>
+            <video id="remoteVideo" class="remote-video" autoplay style="display:none;"></video>
+            
+            <!-- Local Video -->
+            <video id="localVideo" class="local-video" autoplay muted></video>
+            
+            <!-- Video Controls -->
+            <div class="video-controls">
+                <button class="btn-control" id="toggleMicBtn">
+                    <i class="fas fa-microphone"></i>
+                </button>
+                <button class="btn-control" id="toggleCameraBtn">
+                    <i class="fas fa-video"></i>
+                </button>
+                <button class="btn-control end-call" id="endCallBtn">
+                    <i class="fas fa-phone-slash"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script src="js/chat-learn.js"></script>
+    <script src="js/whiteboard.js"></script>
+    <script src="js/dashboard-fix.js"></script>
+    <script src="js/payment-system.js"></script>
 </body>
 </html>

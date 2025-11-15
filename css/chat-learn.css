@@ -823,7 +823,11 @@
 }
 
 .btn-control.end-call {
-    background: #ef4444;
+    background: #EF4444;
+}
+
+.btn-control.inactive {
+    background: #dc2626; /* Darker red for inactive state */
 }
 
 .btn-control.end-call:hover {

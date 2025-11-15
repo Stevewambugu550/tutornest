@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Login - TutorNest</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .login-container {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            width: 90%;
+            max-width: 400px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #1e293b;
+            font-size: 2rem;
+        }
+        .logo {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        .quick-login-btn {
+            width: 100%;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .quick-login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .student-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+        .tutor-btn {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+        }
+        .admin-btn {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+        }
+        .custom-btn {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+        }
+        .divider {
+            text-align: center;
+            margin: 1.5rem 0;
+            color: #94a3b8;
+            position: relative;
+        }
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #e2e8f0;
+        }
+        .divider span {
+            background: white;
+            padding: 0 1rem;
+            position: relative;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #475569;
+            font-weight: 500;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        .info {
+            background: #f1f5f9;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+        .success-message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #10b981;
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+        @keyframes slideIn {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="success-message" id="successMessage">
+        ✅ Login successful! Redirecting to dashboard...
+    </div>
+
+    <div class="login-container">
+        <div class="logo">🎓</div>
+        <h1>Quick Login</h1>
+        
+        <button class="quick-login-btn student-btn" onclick="quickLogin('student')">
+            <i class="fas fa-user-graduate"></i> Login as Demo Student
+        </button>
+        
+        <button class="quick-login-btn tutor-btn" onclick="quickLogin('tutor')">
+            <i class="fas fa-chalkboard-teacher"></i> Login as Demo Tutor
+        </button>
+        
+        <button class="quick-login-btn admin-btn" onclick="quickLogin('admin')">
+            <i class="fas fa-user-shield"></i> Login as Admin
+        </button>
+        
+        <div class="divider"><span>or login with custom name</span></div>
+        
+        <div class="form-group">
+            <label>Your Name</label>
+            <input type="text" id="customName" placeholder="Enter your name" value="John">
+        </div>
+        
+        <button class="quick-login-btn custom-btn" onclick="customLogin()">
+            <i class="fas fa-sign-in-alt"></i> Login with Custom Name
+        </button>
+        
+        <div class="info">
+            <strong>ℹ️ Test Features:</strong><br>
+            • Click any login to access the dashboard<br>
+            • All 15 tutors are available<br>
+            • Book sessions, chat, video calls work<br>
+            • Your name will appear in the dashboard
+        </div>
+    </div>
+
+    <script>
+        function quickLogin(type) {
+            let user = {};
+            
+            switch(type) {
+                case 'student':
+                    user = {
+                        email: 'student@tutornest.com',
+                        firstName: 'Alex',
+                        lastName: 'Johnson',
+                        role: 'student'
+                    };
+                    break;
+                case 'tutor':
+                    user = {
+                        email: 'tutor@tutornest.com',
+                        firstName: 'Dr. Sarah',
+                        lastName: 'Wilson',
+                        role: 'tutor'
+                    };
+                    break;
+                case 'admin':
+                    user = {
+                        email: 'admin@tutornest.com',
+                        firstName: 'Admin',
+                        lastName: 'User',
+                        role: 'admin'
+                    };
+                    break;
+            }
+            
+            // Store user in localStorage
+            localStorage.setItem('user', JSON.stringify(user));
+            localStorage.setItem('authToken', 'demo-token-' + Date.now());
+            
+            // Show success message
+            showSuccess();
+            
+            // Redirect based on role
+            setTimeout(() => {
+                if (type === 'tutor') {
+                    window.location.href = 'tutor-dashboard.html';
+                } else {
+                    window.location.href = 'student-dashboard.html';
+                }
+            }, 1500);
+        }
+        
+        function customLogin() {
+            const name = document.getElementById('customName').value.trim();
+            
+            if (!name) {
+                alert('Please enter your name');
+                return;
+            }
+            
+            const user = {
+                email: name.toLowerCase().replace(' ', '.') + '@tutornest.com',
+                firstName: name.split(' ')[0],
+                lastName: name.split(' ')[1] || '',
+                role: 'student'
+            };
+            
+            // Store user in localStorage
+            localStorage.setItem('user', JSON.stringify(user));
+            localStorage.setItem('authToken', 'demo-token-' + Date.now());
+            
+            // Show success message
+            showSuccess();
+            
+            // Redirect to dashboard
+            setTimeout(() => {
+                window.location.href = 'student-dashboard.html';
+            }, 1500);
+        }
+        
+        function showSuccess() {
+            const msg = document.getElementById('successMessage');
+            msg.style.display = 'block';
+            setTimeout(() => {
+                msg.style.opacity = '0.9';
+            }, 100);
+        }
+        
+        // Check if already logged in
+        const existingUser = localStorage.getItem('user');
+        if (existingUser) {
+            const user = JSON.parse(existingUser);
+            document.getElementById('customName').value = user.firstName || 'John';
+        }
+    </script>
+</body>
+</html>

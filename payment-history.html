@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment History - TutorNest</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/professional.css">
+    <style>
+        .history-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        .payment-table {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .payment-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .payment-table th {
+            background: #f8f9fa;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: #64748b;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .payment-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .payment-table tr:hover {
+            background: #f8f9fa;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        .status-completed {
+            background: #d1fae5;
+            color: #10b981;
+        }
+        .status-pending {
+            background: #fef3c7;
+            color: #f59e0b;
+        }
+        .status-failed {
+            background: #fee2e2;
+            color: #ef4444;
+        }
+        .payment-method {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1e293b;
+        }
+        .stat-label {
+            color: #64748b;
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-main">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="logo-text">TutorNest</div>
+                </a>
+                
+                <nav class="nav-menu">
+                    <a href="student-dashboard.html">Dashboard</a>
+                    <a href="#" class="active">Payment History</a>
+                    <a href="chat-learn.html">Messages</a>
+                </nav>
+                
+                <div class="header-actions">
+                    <a href="student-dashboard.html" class="btn btn-primary">Back to Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="history-container">
+        <div class="history-header">
+            <h1>💳 Payment History</h1>
+            <button class="btn btn-primary" onclick="downloadInvoices()">
+                <i class="fas fa-download"></i> Download Invoices
+            </button>
+        </div>
+
+        <!-- Statistics -->
+        <div class="stats-row">
+            <div class="stat-card">
+                <div class="stat-value" id="totalSpent">$0.00</div>
+                <div class="stat-label">Total Spent</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="totalSessions">0</div>
+                <div class="stat-label">Total Sessions</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="avgSession">$0.00</div>
+                <div class="stat-label">Average per Session</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="savedAmount">$0.00</div>
+                <div class="stat-label">Amount Saved</div>
+            </div>
+        </div>
+
+        <!-- Payment Table -->
+        <div class="payment-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Transaction ID</th>
+                        <th>Tutor</th>
+                        <th>Duration</th>
+                        <th>Amount</th>
+                        <th>Payment Method</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="paymentTableBody">
+                    <!-- Payments will be loaded here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="js/dashboard-fix.js"></script>
+    <script src="js/payment-system.js"></script>
+    <script>
+        // Load payment history
+        function loadPaymentHistory() {
+            const history = JSON.parse(localStorage.getItem('paymentHistory') || '[]');
+            const tbody = document.getElementById('paymentTableBody');
+            
+            if (history.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="8" style="text-align: center; padding: 3rem; color: #64748b;">
+                            No payment history yet. Book a session to get started!
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            // Calculate statistics
+            let totalSpent = 0;
+            let totalSessions = history.length;
+            
+            tbody.innerHTML = history.reverse().map(payment => {
+                totalSpent += parseFloat(payment.amount);
+                const date = new Date(payment.timestamp);
+                
+                return `
+                    <tr>
+                        <td>${date.toLocaleDateString()}</td>
+                        <td><code>${payment.id}</code></td>
+                        <td><strong>${payment.tutor}</strong></td>
+                        <td>${payment.duration} min</td>
+                        <td><strong>$${payment.amount}</strong></td>
+                        <td>
+                            <div class="payment-method">
+                                ${getPaymentMethodIcon(payment.method)}
+                                ${getPaymentMethodName(payment.method)}
+                            </div>
+                        </td>
+                        <td>
+                            <span class="status-badge status-${payment.status}">
+                                ${payment.status.charAt(0).toUpperCase() + payment.status.slice(1)}
+                            </span>
+                        </td>
+                        <td>
+                            <button onclick="viewReceipt('${payment.id}')" style="background: none; border: none; color: #3b82f6; cursor: pointer;">
+                                <i class="fas fa-receipt"></i> Receipt
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+            
+            // Update statistics
+            document.getElementById('totalSpent').textContent = `$${totalSpent.toFixed(2)}`;
+            document.getElementById('totalSessions').textContent = totalSessions;
+            document.getElementById('avgSession').textContent = `$${(totalSpent / totalSessions).toFixed(2)}`;
+            document.getElementById('savedAmount').textContent = `$${(totalSpent * 0.1).toFixed(2)}`; // 10% savings
+        }
+        
+        function getPaymentMethodIcon(method) {
+            const icons = {
+                card: '<i class="fab fa-cc-visa" style="color: #1a1f71;"></i>',
+                paypal: '<img src="https://www.paypalobjects.com/webstatic/mktg/Logo/pp-logo-100px.png" style="height: 20px;">',
+                cashapp: '<span style="background: #00d632; color: white; padding: 2px 6px; border-radius: 4px; font-weight: bold;">$</span>',
+                zelle: '<span style="background: #6d1ed4; color: white; padding: 2px 6px; border-radius: 50%; font-weight: bold; font-size: 0.8rem;">Z</span>'
+            };
+            return icons[method] || '<i class="fas fa-credit-card"></i>';
+        }
+        
+        function getPaymentMethodName(method) {
+            const names = {
+                card: 'Credit Card',
+                paypal: 'PayPal',
+                cashapp: 'Cash App',
+                zelle: 'Zelle'
+            };
+            return names[method] || 'Card';
+        }
+        
+        function viewReceipt(paymentId) {
+            const payment = JSON.parse(localStorage.getItem('paymentHistory') || '[]')
+                .find(p => p.id === paymentId);
+            
+            if (!payment) return;
+            
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+                background: rgba(0,0,0,0.5); display: flex;
+                align-items: center; justify-content: center; z-index: 10000;
+            `;
+            
+            modal.innerHTML = `
+                <div style="background: white; padding: 2rem; border-radius: 12px; max-width: 400px; width: 90%;">
+                    <h2 style="margin-bottom: 1.5rem;">📄 Receipt</h2>
+                    <div style="border-top: 2px solid #e2e8f0; border-bottom: 2px solid #e2e8f0; padding: 1rem 0; margin-bottom: 1rem;">
+                        <p><strong>Transaction ID:</strong> ${payment.id}</p>
+                        <p><strong>Date:</strong> ${new Date(payment.timestamp).toLocaleString()}</p>
+                        <p><strong>Tutor:</strong> ${payment.tutor}</p>
+                        <p><strong>Duration:</strong> ${payment.duration} minutes</p>
+                        <p><strong>Amount Paid:</strong> $${payment.amount}</p>
+                        <p><strong>Payment Method:</strong> ${getPaymentMethodName(payment.method)}</p>
+                    </div>
+                    <div style="display: flex; gap: 1rem;">
+                        <button onclick="this.closest('[style*=\\"position: fixed\\"]').remove()" 
+                                style="flex: 1; padding: 0.75rem; background: #3b82f6; color: white; border: none; border-radius: 8px; cursor: pointer;">
+                            Close
+                        </button>
+                        <button onclick="printReceipt('${payment.id}')" 
+                                style="flex: 1; padding: 0.75rem; background: #10b981; color: white; border: none; border-radius: 8px; cursor: pointer;">
+                            <i class="fas fa-print"></i> Print
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+        
+        function printReceipt(paymentId) {
+            window.print();
+        }
+        
+        function downloadInvoices() {
+            showToast('Preparing invoices for download...', 'info');
+            setTimeout(() => {
+                showToast('Invoices downloaded successfully!', 'success');
+            }, 2000);
+        }
+        
+        // Load data on page load
+        loadPaymentHistory();
+        
+        // Create some demo payment history if none exists
+        if (!localStorage.getItem('paymentHistory')) {
+            const demoPayments = [
+                {
+                    id: 'PAY-1234567890',
+                    amount: '65.00',
+                    tutor: 'Dr. Sarah Johnson',
+                    duration: 60,
+                    timestamp: new Date(Date.now() - 86400000).toISOString(),
+                    status: 'completed',
+                    method: 'card'
+                },
+                {
+                    id: 'PAY-0987654321',
+                    amount: '80.00',
+                    tutor: 'Michael Chen',
+                    duration: 60,
+                    timestamp: new Date(Date.now() - 172800000).toISOString(),
+                    status: 'completed',
+                    method: 'paypal'
+                },
+                {
+                    id: 'PAY-1122334455',
+                    amount: '45.00',
+                    tutor: 'Maria Garcia',
+                    duration: 30,
+                    timestamp: new Date(Date.now() - 259200000).toISOString(),
+                    status: 'completed',
+                    method: 'cashapp'
+                }
+            ];
+            localStorage.setItem('paymentHistory', JSON.stringify(demoPayments));
+            loadPaymentHistory();
+        }
+    </script>
+</body>
+</html>

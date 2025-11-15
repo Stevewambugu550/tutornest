@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Become a Tutor - TutorNest</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/tutor-application.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo" onclick="window.location.href='index.html'">
+                <i class="fas fa-graduation-cap logo-icon"></i>
+                <span class="logo-text">TutorNest</span>
+            </div>
+            <div class="nav-buttons">
+                <a href="index.html" class="btn-login">Back to Home</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="tutor-hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Earn $30-$200/hour Teaching Online</h1>
+                <p>Join 50,000+ expert tutors helping students succeed</p>
+                <div class="earning-calculator">
+                    <span>Teaching 20 hours/week, you could earn:</span>
+                    <strong>$2,400 - $16,000/month</strong>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Application Section -->
+    <div class="application-section">
+        <!-- Progress Indicator -->
+        <div class="application-progress">
+            <div class="progress-step active" data-step="1">
+                <div class="step-number">1</div>
+                <span class="step-label">Basic Info</span>
+            </div>
+            <div class="progress-step" data-step="2">
+                <div class="step-number">2</div>
+                <span class="step-label">Education</span>
+            </div>
+            <div class="progress-step" data-step="3">
+                <div class="step-number">3</div>
+                <span class="step-label">Experience</span>
+            </div>
+            <div class="progress-step" data-step="4">
+                <div class="step-number">4</div>
+                <span class="step-label">Subjects</span>
+            </div>
+            <div class="progress-step" data-step="5">
+                <div class="step-number">5</div>
+                <span class="step-label">Review</span>
+            </div>
+        </div>
+
+        <!-- Application Form -->
+        <div class="application-form">
+            <form id="tutor-application-form">
+                <!-- Step 1: Basic Information -->
+                <div class="form-step active" data-step="1">
+                    <h2>Let's start with your basic information</h2>
+                    <p class="step-description">This helps us create your tutor profile</p>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>First Name *</label>
+                            <input type="text" name="firstName" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Last Name *</label>
+                            <input type="text" name="lastName" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Email Address *</label>
+                            <input type="email" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Phone Number *</label>
+                            <input type="tel" name="phone" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Country *</label>
+                            <select name="country" required>
+                                <option value="">Select Country</option>
+                                <option value="US">United States</option>
+                                <option value="CA">Canada</option>
+                                <option value="UK">United Kingdom</option>
+                                <option value="AU">Australia</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Time Zone *</label>
+                            <select name="timezone" required>
+                                <option value="">Select Time Zone</option>
+                                <option value="PST">Pacific (PST)</option>
+                                <option value="MST">Mountain (MST)</option>
+                                <option value="CST">Central (CST)</option>
+                                <option value="EST">Eastern (EST)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label>Tell us about yourself *</label>
+                            <textarea name="bio" rows="4" placeholder="Brief introduction about yourself..." required></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Education -->
+                <div class="form-step" data-step="2">
+                    <h2>Your Educational Background</h2>
+                    <p class="step-description">Help students understand your qualifications</p>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Highest Degree *</label>
+                            <select name="degree" required>
+                                <option value="">Select Degree</option>
+                                <option value="bachelors">Bachelor's Degree</option>
+                                <option value="masters">Master's Degree</option>
+                                <option value="phd">PhD/Doctorate</option>
+                                <option value="professional">Professional Degree</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Field of Study *</label>
+                            <input type="text" name="fieldOfStudy" placeholder="e.g., Mathematics, Computer Science" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>University/College *</label>
+                            <input type="text" name="university" placeholder="e.g., Harvard University" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Graduation Year *</label>
+                            <input type="number" name="graduationYear" min="1970" max="2024" required>
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label>Teaching Certifications (if any)</label>
+                            <textarea name="certifications" rows="3" placeholder="List any teaching certifications or credentials"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Experience -->
+                <div class="form-step" data-step="3">
+                    <h2>Your Teaching Experience</h2>
+                    <p class="step-description">Share your teaching and tutoring background</p>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Years of Teaching Experience *</label>
+                            <select name="experience" required>
+                                <option value="">Select Experience</option>
+                                <option value="0-1">Less than 1 year</option>
+                                <option value="1-3">1-3 years</option>
+                                <option value="3-5">3-5 years</option>
+                                <option value="5-10">5-10 years</option>
+                                <option value="10+">10+ years</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Teaching Setting *</label>
+                            <select name="setting" required>
+                                <option value="">Select Setting</option>
+                                <option value="online">Online Only</option>
+                                <option value="classroom">Classroom</option>
+                                <option value="both">Both Online & Classroom</option>
+                                <option value="private">Private Tutoring</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label>Describe Your Teaching Experience *</label>
+                            <textarea name="experienceDescription" rows="4" placeholder="Tell us about your teaching experience..." required></textarea>
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label>What makes you a great tutor? *</label>
+                            <textarea name="whyTutor" rows="4" placeholder="What's your teaching philosophy?" required></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 4: Subjects -->
+                <div class="form-step" data-step="4">
+                    <h2>Subjects You Can Teach</h2>
+                    <p class="step-description">Select all subjects you're qualified to teach</p>
+                    
+                    <div class="subject-categories">
+                        <!-- Mathematics -->
+                        <div class="subject-category">
+                            <h3><i class="fas fa-calculator"></i> Mathematics</h3>
+                            <div class="subject-grid">
+                                <label><input type="checkbox" name="subjects" value="Elementary Math"> Elementary Math</label>
+                                <label><input type="checkbox" name="subjects" value="Pre-Algebra"> Pre-Algebra</label>
+                                <label><input type="checkbox" name="subjects" value="Algebra I"> Algebra I</label>
+                                <label><input type="checkbox" name="subjects" value="Algebra II"> Algebra II</label>
+                                <label><input type="checkbox" name="subjects" value="Geometry"> Geometry</label>
+                                <label><input type="checkbox" name="subjects" value="Trigonometry"> Trigonometry</label>
+                                <label><input type="checkbox" name="subjects" value="Pre-Calculus"> Pre-Calculus</label>
+                                <label><input type="checkbox" name="subjects" value="Calculus"> Calculus</label>
+                                <label><input type="checkbox" name="subjects" value="Statistics"> Statistics</label>
+                            </div>
+                        </div>
+
+                        <!-- Sciences -->
+                        <div class="subject-category">
+                            <h3><i class="fas fa-flask"></i> Sciences</h3>
+                            <div class="subject-grid">
+                                <label><input type="checkbox" name="subjects" value="General Science"> General Science</label>
+                                <label><input type="checkbox" name="subjects" value="Biology"> Biology</label>
+                                <label><input type="checkbox" name="subjects" value="Chemistry"> Chemistry</label>
+                                <label><input type="checkbox" name="subjects" value="Physics"> Physics</label>
+                                <label><input type="checkbox" name="subjects" value="Earth Science"> Earth Science</label>
+                                <label><input type="checkbox" name="subjects" value="Environmental Science"> Environmental Science</label>
+                                <label><input type="checkbox" name="subjects" value="Anatomy"> Anatomy</label>
+                            </div>
+                        </div>
+
+                        <!-- Languages -->
+                        <div class="subject-category">
+                            <h3><i class="fas fa-language"></i> Languages</h3>
+                            <div class="subject-grid">
+                                <label><input type="checkbox" name="subjects" value="English"> English</label>
+                                <label><input type="checkbox" name="subjects" value="Spanish"> Spanish</label>
+                                <label><input type="checkbox" name="subjects" value="French"> French</label>
+                                <label><input type="checkbox" name="subjects" value="German"> German</label>
+                                <label><input type="checkbox" name="subjects" value="Chinese"> Chinese</label>
+                                <label><input type="checkbox" name="subjects" value="Japanese"> Japanese</label>
+                                <label><input type="checkbox" name="subjects" value="ESL"> ESL/ESOL</label>
+                            </div>
+                        </div>
+
+                        <!-- Computer Science -->
+                        <div class="subject-category">
+                            <h3><i class="fas fa-laptop-code"></i> Computer Science</h3>
+                            <div class="subject-grid">
+                                <label><input type="checkbox" name="subjects" value="Programming"> Programming</label>
+                                <label><input type="checkbox" name="subjects" value="Python"> Python</label>
+                                <label><input type="checkbox" name="subjects" value="Java"> Java</label>
+                                <label><input type="checkbox" name="subjects" value="JavaScript"> JavaScript</label>
+                                <label><input type="checkbox" name="subjects" value="Web Development"> Web Development</label>
+                                <label><input type="checkbox" name="subjects" value="Data Science"> Data Science</label>
+                                <label><input type="checkbox" name="subjects" value="Machine Learning"> Machine Learning</label>
+                            </div>
+                        </div>
+
+                        <!-- Test Prep -->
+                        <div class="subject-category">
+                            <h3><i class="fas fa-graduation-cap"></i> Test Preparation</h3>
+                            <div class="subject-grid">
+                                <label><input type="checkbox" name="subjects" value="SAT"> SAT</label>
+                                <label><input type="checkbox" name="subjects" value="ACT"> ACT</label>
+                                <label><input type="checkbox" name="subjects" value="GRE"> GRE</label>
+                                <label><input type="checkbox" name="subjects" value="GMAT"> GMAT</label>
+                                <label><input type="checkbox" name="subjects" value="LSAT"> LSAT</label>
+                                <label><input type="checkbox" name="subjects" value="MCAT"> MCAT</label>
+                                <label><input type="checkbox" name="subjects" value="AP Exams"> AP Exams</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pricing-section">
+                        <h3>Your Hourly Rate</h3>
+                        <div class="form-group">
+                            <label>How much would you like to charge per hour? *</label>
+                            <input type="number" name="hourlyRate" min="30" max="200" value="60" required>
+                            <small>Suggested range: $30-$200/hour based on experience</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 5: Review -->
+                <div class="form-step" data-step="5">
+                    <h2>Review Your Application</h2>
+                    <p class="step-description">Please review your information before submitting</p>
+                    
+                    <div class="review-section">
+                        <h3>Personal Information</h3>
+                        <div class="review-item">
+                            <span class="review-label">Name:</span>
+                            <span class="review-value" id="review-name">-</span>
+                        </div>
+                        <div class="review-item">
+                            <span class="review-label">Email:</span>
+                            <span class="review-value" id="review-email">-</span>
+                        </div>
+                        <div class="review-item">
+                            <span class="review-label">Phone:</span>
+                            <span class="review-value" id="review-phone">-</span>
+                        </div>
+                    </div>
+
+                    <div class="review-section">
+                        <h3>Education</h3>
+                        <div class="review-item">
+                            <span class="review-label">Degree:</span>
+                            <span class="review-value" id="review-degree">-</span>
+                        </div>
+                        <div class="review-item">
+                            <span class="review-label">University:</span>
+                            <span class="review-value" id="review-university">-</span>
+                        </div>
+                    </div>
+
+                    <div class="review-section">
+                        <h3>Teaching</h3>
+                        <div class="review-item">
+                            <span class="review-label">Experience:</span>
+                            <span class="review-value" id="review-experience">-</span>
+                        </div>
+                        <div class="review-item">
+                            <span class="review-label">Hourly Rate:</span>
+                            <span class="review-value" id="review-rate">-</span>
+                        </div>
+                    </div>
+
+                    <div class="terms">
+                        <label>
+                            <input type="checkbox" name="terms" required>
+                            I agree to the TutorNest Terms of Service and Privacy Policy
+                        </label>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Form Navigation -->
+            <div class="form-navigation">
+                <button type="button" class="btn-prev" onclick="previousStep()">
+                    <i class="fas fa-arrow-left"></i> Previous
+                </button>
+                <button type="button" class="btn-next" onclick="nextStep()">
+                    Next <i class="fas fa-arrow-right"></i>
+                </button>
+                <button type="submit" class="btn-submit-application" style="display: none;" onclick="submitApplication()">
+                    Submit Application <i class="fas fa-check"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 1;
+        const totalSteps = 5;
+        const form = document.getElementById('tutor-application-form');
+
+        function showStep(step) {
+            // Update form steps
+            document.querySelectorAll('.form-step').forEach(s => {
+                s.classList.remove('active');
+                if (parseInt(s.dataset.step) === step) {
+                    s.classList.add('active');
+                }
+            });
+
+            // Update progress steps
+            document.querySelectorAll('.progress-step').forEach(s => {
+                s.classList.remove('active', 'completed');
+                const stepNum = parseInt(s.dataset.step);
+                if (stepNum < step) {
+                    s.classList.add('completed');
+                } else if (stepNum === step) {
+                    s.classList.add('active');
+                }
+            });
+
+            // Update buttons
+            document.querySelector('.btn-prev').style.display = step === 1 ? 'none' : 'block';
+            document.querySelector('.btn-next').style.display = step === totalSteps ? 'none' : 'block';
+            document.querySelector('.btn-submit-application').style.display = step === totalSteps ? 'block' : 'none';
+
+            // If on review step, populate review data
+            if (step === 5) {
+                populateReview();
+            }
+        }
+
+        function nextStep() {
+            if (validateStep(currentStep)) {
+                if (currentStep < totalSteps) {
+                    currentStep++;
+                    showStep(currentStep);
+                }
+            }
+        }
+
+        function previousStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                showStep(currentStep);
+            }
+        }
+
+        function validateStep(step) {
+            // Basic validation - in production, add more thorough validation
+            const currentStepElement = document.querySelector(`.form-step[data-step="${step}"]`);
+            const requiredFields = currentStepElement.querySelectorAll('[required]');
+            
+            for (let field of requiredFields) {
+                if (!field.value) {
+                    alert('Please fill in all required fields');
+                    field.focus();
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        function populateReview() {
+            // Populate review section with form data
+            const formData = new FormData(form);
+            document.getElementById('review-name').textContent = 
+                formData.get('firstName') + ' ' + formData.get('lastName');
+            document.getElementById('review-email').textContent = formData.get('email');
+            document.getElementById('review-phone').textContent = formData.get('phone');
+            document.getElementById('review-degree').textContent = formData.get('degree');
+            document.getElementById('review-university').textContent = formData.get('university');
+            document.getElementById('review-experience').textContent = formData.get('experience') + ' years';
+            document.getElementById('review-rate').textContent = '$' + formData.get('hourlyRate') + '/hour';
+        }
+
+        function submitApplication() {
+            if (!validateStep(5)) {
+                return;
+            }
+
+            // Save application data
+            const formData = new FormData(form);
+            const applicationData = {};
+            for (let [key, value] of formData.entries()) {
+                if (applicationData[key]) {
+                    if (Array.isArray(applicationData[key])) {
+                        applicationData[key].push(value);
+                    } else {
+                        applicationData[key] = [applicationData[key], value];
+                    }
+                } else {
+                    applicationData[key] = value;
+                }
+            }
+
+            // Save to localStorage for demo
+            localStorage.setItem('tutorApplication', JSON.stringify(applicationData));
+            
+            // Create tutor account
+            const tutorAccount = {
+                firstName: applicationData.firstName,
+                lastName: applicationData.lastName,
+                email: applicationData.email,
+                role: 'tutor',
+                isLoggedIn: true,
+                applicationStatus: 'pending'
+            };
+            
+            localStorage.setItem('user', JSON.stringify(tutorAccount));
+            localStorage.setItem('authToken', 'demo_token_' + Date.now());
+
+            // Show success message and redirect
+            alert('Application submitted successfully! You will hear from us within 2-3 business days.');
+            window.location.href = 'tutor-dashboard.html';
+        }
+
+        // Initialize
+        showStep(1);
+    </script>
+</body>
+</html>
