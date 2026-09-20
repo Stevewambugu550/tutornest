@@ -172,7 +172,10 @@ function createJsonPool() {
                 selected_transit: params[1],
                 selected_lodging: params[2],
                 selected_finale: params[3],
-                source_ip: params[4],
+                selected_travelers: params[4],
+                selected_season: params[5],
+                matched_offer: params[6],
+                source_ip: params[7],
                 created_at: now(),
             };
             data.quiz.push(result);
@@ -297,6 +300,9 @@ async function init() {
             selected_transit text check (char_length(selected_transit) <= 80),
             selected_lodging text check (char_length(selected_lodging) <= 80),
             selected_finale text check (char_length(selected_finale) <= 80),
+            selected_travelers text check (char_length(selected_travelers) <= 80),
+            selected_season text check (char_length(selected_season) <= 80),
+            matched_offer text check (char_length(matched_offer) <= 80),
             source_ip inet,
             created_at timestamptz not null default now()
         );
@@ -529,11 +535,14 @@ router.post('/quiz', quizLimit, async (req, res) => {
         const transit = clean(req.body.selected_transit, 80);
         const lodging = clean(req.body.selected_lodging, 80);
         const finale = clean(req.body.selected_finale, 80);
+        const travelers = clean(req.body.selected_travelers, 80);
+        const season = clean(req.body.selected_season, 80);
+        const offer = clean(req.body.matched_offer, 80);
         if (!persona) return res.status(400).json({ message: 'Persona result is required.' });
         const { rows } = await pool.query(`
-            insert into public.roar_quiz_results (traveler_persona, selected_transit, selected_lodging, selected_finale, source_ip)
-            values ($1,$2,$3,$4,$5) returning id, created_at
-        `, [persona, transit || null, lodging || null, finale || null, req.ip || null]);
+            insert into public.roar_quiz_results (traveler_persona, selected_transit, selected_lodging, selected_finale, selected_travelers, selected_season, matched_offer, source_ip)
+            values ($1,$2,$3,$4,$5,$6,$7,$8) returning id, created_at
+        `, [persona, transit || null, lodging || null, finale || null, travelers || null, season || null, offer || null, req.ip || null]);
         res.status(201).json({ success: true, recorded: rows[0] });
     } catch (error) {
         console.error('Roar quiz tracking error:', error.message);
