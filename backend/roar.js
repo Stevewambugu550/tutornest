@@ -140,27 +140,36 @@ router.post('/auth/register', registerLimit, async (req, res) => {
         if (!/^\S+@\S+\.\S+$/.test(email) || password.length < 10 || !firstName || !lastName) {
             return res.status(400).json({ message: 'Name, valid email, and a password of at least 10 characters are required.' });
         }
+        const development = process.env.NODE_ENV !== 'production';
         const rawToken = crypto.randomBytes(32).toString('hex');
-        const tokenHash = crypto.createHash('sha256').update(rawToken).digest('hex');
+        const tokenHash = development ? null : crypto.createHash('sha256').update(rawToken).digest('hex');
         const passwordHash = await bcrypt.hash(password, 12);
         const { rows } = await pool.query(`
             insert into public.roar_customers
-                (email, password_hash, first_name, last_name, verification_token_hash, verification_expires_at)
-            values ($1,$2,$3,$4,$5,now() + interval '24 hours')
-            returning id, email, first_name, last_name
-        `, [email, passwordHash, firstName, lastName, tokenHash]);
+                (email, password_hash, first_name, last_name, email_verified, verification_token_hash, verification_expires_at)
+            values ($1,$2,$3,$4,$5,$6,case when $5 then null else now() + interval '24 hours' end)
+            returning id, email, first_name, last_name, role, email_verified
+        `, [email, passwordHash, firstName, lastName, development, tokenHash]);
         const base = process.env.ROAR_CLIENT_URL || 'http://127.0.0.1:4173';
-        const verificationUrl = `${base}/account.html?verify=${rawToken}`;
+        const verificationUrl = development ? null : `${base}/account.html?verify=${rawToken}`;
         try {
             await sendVerificationEmail(email, firstName, verificationUrl);
         } catch (error) {
             await pool.query('delete from public.roar_customers where id=$1', [rows[0].id]);
             throw error;
         }
+        const customer = rows[0];
         res.status(201).json({
-            message: 'Account created. Verify your email before signing in.',
-            verificationUrl: process.env.NODE_ENV === 'production' ? undefined : verificationUrl,
-            user: rows[0],
+            message: development ? 'Account created and signed in.' : 'Account created. Verify your email before signing in.',
+            verificationUrl: development ? undefined : verificationUrl,
+            token: development ? signCustomer(customer) : undefined,
+            user: {
+                id: customer.id,
+                email: customer.email,
+                firstName: customer.first_name,
+                lastName: customer.last_name,
+                role: customer.role,
+            },
         });
     } catch (error) {
         if (error.code === '23505') return res.status(409).json({ message: 'An account with that email already exists.' });
