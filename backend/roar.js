@@ -14,7 +14,7 @@ function createJsonPool() {
     const dbPath = path.join(__dirname, 'roar-local-db.json');
     function load() {
         try { return JSON.parse(fs.readFileSync(dbPath, 'utf8')); }
-        catch { return { customers: [], leads: [], claims: [] }; }
+        catch { return { customers: [], leads: [], claims: [], quiz: [] }; }
     }
     function save(data) { fs.writeFileSync(dbPath, JSON.stringify(data, null, 2)); }
     const now = () => new Date().toISOString();
@@ -23,6 +23,10 @@ function createJsonPool() {
     function query(sql, params = []) {
         const s = sql.toLowerCase().trim();
         const data = load();
+        if (!data.customers) data.customers = [];
+        if (!data.leads) data.leads = [];
+        if (!data.claims) data.claims = [];
+        if (!data.quiz) { data.quiz = []; save(data); }
 
         if (s.startsWith('create table') || s.startsWith('create index') || s.startsWith('alter table')) {
             return Promise.resolve({ rows: [] });
@@ -161,6 +165,26 @@ function createJsonPool() {
             }
             return Promise.resolve({ rows: [] });
         }
+        if (s.startsWith('insert into public.roar_quiz_results')) {
+            const result = {
+                id: uuid(),
+                traveler_persona: params[0],
+                selected_transit: params[1],
+                selected_lodging: params[2],
+                selected_finale: params[3],
+                source_ip: params[4],
+                created_at: now(),
+            };
+            data.quiz.push(result);
+            save(data);
+            return Promise.resolve({ rows: [pick(result)] });
+        }
+        if (s.startsWith('select') && s.includes('from public.roar_quiz_results')) {
+            let rows = [...data.quiz];
+            if (s.includes('order by created_at desc')) rows.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+            if (s.includes('limit 500')) rows = rows.slice(0, 500);
+            return Promise.resolve({ rows: rows.map(pick) });
+        }
         return Promise.resolve({ rows: [] });
     }
 
@@ -267,6 +291,15 @@ async function init() {
             claimed_at timestamptz not null default now()
         );
         create index if not exists roar_leads_customer_idx on public.roar_leads(customer_id);
+        create table if not exists public.roar_quiz_results (
+            id uuid primary key default gen_random_uuid(),
+            traveler_persona text check (char_length(traveler_persona) <= 80),
+            selected_transit text check (char_length(selected_transit) <= 80),
+            selected_lodging text check (char_length(selected_lodging) <= 80),
+            selected_finale text check (char_length(selected_finale) <= 80),
+            source_ip inet,
+            created_at timestamptz not null default now()
+        );
     `);
 }
 
@@ -486,6 +519,31 @@ router.patch('/admin/leads/:id', requireRoarAdmin, async (req, res) => {
         console.error('Roar lead update error:', error.message);
         res.status(500).json({ message:'Unable to update lead.' });
     } finally { client.release(); }
+});
+
+const quizLimit = rateLimit(60 * 60 * 1000, 20);
+
+router.post('/quiz', quizLimit, async (req, res) => {
+    try {
+        const persona = clean(req.body.traveler_persona, 80);
+        const transit = clean(req.body.selected_transit, 80);
+        const lodging = clean(req.body.selected_lodging, 80);
+        const finale = clean(req.body.selected_finale, 80);
+        if (!persona) return res.status(400).json({ message: 'Persona result is required.' });
+        const { rows } = await pool.query(`
+            insert into public.roar_quiz_results (traveler_persona, selected_transit, selected_lodging, selected_finale, source_ip)
+            values ($1,$2,$3,$4,$5) returning id, created_at
+        `, [persona, transit || null, lodging || null, finale || null, req.ip || null]);
+        res.status(201).json({ success: true, recorded: rows[0] });
+    } catch (error) {
+        console.error('Roar quiz tracking error:', error.message);
+        res.status(500).json({ message: 'Unable to record quiz result.' });
+    }
+});
+
+router.get('/admin/quiz', requireRoarAdmin, async (_req, res) => {
+    const { rows } = await pool.query('select * from public.roar_quiz_results order by created_at desc limit 500');
+    res.json({ results: rows });
 });
 
 router.get('/promotion', async (_req, res) => {
