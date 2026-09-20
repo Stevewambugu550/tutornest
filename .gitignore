@@ -37,3 +37,6 @@ Desktop.ini
 .netlify/
 .vercel/
 windsurf_deployment.yaml
+
+# Roar East Africa local development storage
+backend/roar-local-db.json

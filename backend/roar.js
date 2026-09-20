@@ -2,16 +2,182 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
+const fs = require('fs');
+const path = require('path');
 const { Pool } = require('pg');
 const nodemailer = require('nodemailer');
 
 const router = express.Router();
-const pool = new Pool({
+const hasPgConfig = !!(process.env.DATABASE_URL || process.env.PGHOST);
+
+function createJsonPool() {
+    const dbPath = path.join(__dirname, 'roar-local-db.json');
+    function load() {
+        try { return JSON.parse(fs.readFileSync(dbPath, 'utf8')); }
+        catch { return { customers: [], leads: [], claims: [] }; }
+    }
+    function save(data) { fs.writeFileSync(dbPath, JSON.stringify(data, null, 2)); }
+    const now = () => new Date().toISOString();
+    const uuid = () => crypto.randomUUID();
+
+    function query(sql, params = []) {
+        const s = sql.toLowerCase().trim();
+        const data = load();
+
+        if (s.startsWith('create table') || s.startsWith('create index') || s.startsWith('alter table')) {
+            return Promise.resolve({ rows: [] });
+        }
+        if (s.includes('pg_advisory_xact_lock') || s === 'begin' || s === 'commit' || s === 'rollback') {
+            return Promise.resolve({ rows: [] });
+        }
+
+        // helpers
+        function parseReturning(sqlUpper) {
+            const m = sql.match(/returning\s+(.+)$/i);
+            if (!m) return null;
+            return m[1].split(',').map(c => c.trim().split(/\s+/).pop());
+        }
+        const returning = parseReturning(sql);
+        const pick = (obj) => {
+            if (!returning) return obj;
+            const out = {};
+            for (const col of returning) {
+                if (col === '*') return obj;
+                const camel = col.replace(/_([a-z])/g, (_, l) => l.toUpperCase());
+                if (col in obj) out[col] = obj[col];
+            }
+            return out;
+        };
+
+        if (s.startsWith('insert into public.roar_customers')) {
+            if (data.customers.some(c => c.email === params[0])) {
+                const err = new Error('duplicate key value violates unique constraint "roar_customers_email_key"');
+                err.code = '23505';
+                throw err;
+            }
+            const customer = {
+                id: uuid(),
+                email: params[0],
+                password_hash: params[1],
+                first_name: params[2],
+                last_name: params[3],
+                role: 'customer',
+                email_verified: params[4],
+                verification_token_hash: params[5],
+                verification_expires_at: params[6],
+                created_at: now(),
+                updated_at: now(),
+            };
+            data.customers.push(customer);
+            save(data);
+            return Promise.resolve({ rows: [pick(customer)] });
+        }
+        if (s.startsWith('select count(*)')) {
+            if (s.includes('roar_launch_claims')) return Promise.resolve({ rows: [{ n: data.claims.length }] });
+        }
+        if (s.startsWith('select') && s.includes('from public.roar_customers')) {
+            let rows = data.customers;
+            if (s.includes('where email=$1')) rows = rows.filter(c => c.email === params[0]);
+            if (s.includes('where id=$1')) rows = rows.filter(c => c.id === params[0]);
+            if (s.includes('where verification_token_hash=$1')) rows = rows.filter(c => c.verification_token_hash === params[0] && c.verification_expires_at && new Date(c.verification_expires_at) > new Date());
+            if (s.includes('limit 1')) rows = rows.slice(0, 1);
+            return Promise.resolve({ rows: rows.map(pick) });
+        }
+        if (s.startsWith('update public.roar_customers')) {
+            const customer = data.customers.find(c => {
+                if (s.includes('where id=$')) return c.id === params.find((_, i) => s.includes(`where id=$${i + 1}`));
+                if (s.includes('where verification_token_hash=$')) return c.verification_token_hash === params[0];
+                return false;
+            });
+            if (!customer) return Promise.resolve({ rows: [] });
+            const getParam = (name) => {
+                const m = sql.match(new RegExp(`${name}\\s*=\\s*\\$([0-9]+)`, 'i'));
+                return m ? params[Number(m[1]) - 1] : undefined;
+            };
+            const fields = ['email','password_hash','first_name','last_name','role','email_verified','verification_token_hash','verification_expires_at'];
+            for (const f of fields) {
+                const v = getParam(f);
+                if (v !== undefined) customer[f] = v;
+            }
+            customer.updated_at = now();
+            save(data);
+            return Promise.resolve({ rows: [pick(customer)] });
+        }
+        if (s.startsWith('delete from public.roar_customers')) {
+            const before = data.customers.length;
+            data.customers = data.customers.filter(c => c.id !== params[0]);
+            save(data);
+            return Promise.resolve({ rows: [] });
+        }
+        if (s.startsWith('insert into public.roar_leads')) {
+            const lead = {
+                id: uuid(),
+                customer_id: params[0],
+                client_name: params[1],
+                client_email: params[2],
+                target_dates: params[3],
+                total_guests: params[4],
+                tier_preference: params[5],
+                primary_objective: params[6],
+                notes: params[7],
+                terms_accepted: true,
+                marketing_consent: params[8],
+                estimated_value: params[9],
+                source: 'website',
+                status: 'new',
+                launch_offer_claimed: false,
+                launch_offer_percent: null,
+                created_at: now(),
+                updated_at: now(),
+            };
+            data.leads.push(lead);
+            save(data);
+            return Promise.resolve({ rows: [pick(lead)] });
+        }
+        if (s.startsWith('select') && s.includes('from public.roar_leads')) {
+            let rows = [...data.leads];
+            if (s.includes('order by created_at desc')) rows.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+            if (s.includes('limit 500')) rows = rows.slice(0, 500);
+            return Promise.resolve({ rows: rows.map(pick) });
+        }
+        if (s.startsWith('update public.roar_leads')) {
+            const lead = data.leads.find(l => l.id === params[params.length - 1]);
+            if (!lead) return Promise.resolve({ rows: [] });
+            const getParam = (name) => {
+                const m = sql.match(new RegExp(`${name}\\s*=\\s*\\$([0-9]+)`, 'i'));
+                return m ? params[Number(m[1]) - 1] : undefined;
+            };
+            if (s.includes('set status=')) lead.status = getParam('status');
+            if (s.includes('launch_offer_claimed=true')) { lead.launch_offer_claimed = true; lead.launch_offer_percent = 10; }
+            lead.updated_at = now();
+            save(data);
+            return Promise.resolve({ rows: [pick(lead)] });
+        }
+        if (s.startsWith('insert into public.roar_launch_claims')) {
+            const [lead_id, customer_id] = params;
+            if (!data.claims.some(c => c.lead_id === lead_id)) {
+                data.claims.push({ id: data.claims.length + 1, lead_id, customer_id, discount_percent: 10, claimed_at: now() });
+                save(data);
+            }
+            return Promise.resolve({ rows: [] });
+        }
+        return Promise.resolve({ rows: [] });
+    }
+
+    function connect() {
+        return Promise.resolve({ query, release: () => {} });
+    }
+
+    return { query, connect };
+}
+
+const pool = hasPgConfig ? new Pool({
     connectionString: process.env.DATABASE_URL || undefined,
     ssl: process.env.PGSSLMODE === 'require' || process.env.DATABASE_URL ? { rejectUnauthorized: false } : false,
     connectionTimeoutMillis: 10000,
-});
-const secret = process.env.ROAR_JWT_SECRET || process.env.JWT_SECRET;
+}) : createJsonPool();
+
+const secret = process.env.ROAR_JWT_SECRET || process.env.JWT_SECRET || (!hasPgConfig ? 'dev-roar-secret-do-not-use-in-production' : undefined);
 const clean = (value, max = 500) => String(value ?? '').trim().slice(0, max);
 const statuses = new Set(['new', 'reviewing', 'contacted', 'proposal_sent', 'won', 'lost']);
 
@@ -55,6 +221,10 @@ async function sendVerificationEmail(email, firstName, verificationUrl) {
 }
 
 async function init() {
+    if (!hasPgConfig) {
+        console.log('[roar] no PostgreSQL config — using local JSON storage for development');
+        return;
+    }
     await pool.query(`
         create table if not exists public.roar_customers (
             id uuid primary key default gen_random_uuid(),
@@ -132,6 +302,7 @@ function requireRoarAdmin(req, res, next) {
 }
 
 router.post('/auth/register', registerLimit, async (req, res) => {
+    let customerId = null;
     try {
         const email = clean(req.body.email, 254).toLowerCase();
         const password = String(req.body.password || '');
@@ -141,38 +312,95 @@ router.post('/auth/register', registerLimit, async (req, res) => {
             return res.status(400).json({ message: 'Name, valid email, and a password of at least 10 characters are required.' });
         }
         const development = process.env.NODE_ENV !== 'production';
+        const passwordHash = await bcrypt.hash(password, 12);
         const rawToken = crypto.randomBytes(32).toString('hex');
         const tokenHash = development ? null : crypto.createHash('sha256').update(rawToken).digest('hex');
-        const passwordHash = await bcrypt.hash(password, 12);
-        const { rows } = await pool.query(`
+        const expiresAt = development ? null : new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
+
+        const { rows: insertRows } = await pool.query(`
             insert into public.roar_customers
                 (email, password_hash, first_name, last_name, email_verified, verification_token_hash, verification_expires_at)
-            values ($1,$2,$3,$4,$5,$6,case when $5 then null else now() + interval '24 hours' end)
+            values ($1,$2,$3,$4,$5,$6,$7)
             returning id, email, first_name, last_name, role, email_verified
-        `, [email, passwordHash, firstName, lastName, development, tokenHash]);
+        `, [email, passwordHash, firstName, lastName, development, tokenHash, expiresAt]);
+        customerId = insertRows[0].id;
+
         const base = process.env.ROAR_CLIENT_URL || 'http://127.0.0.1:4173';
         const verificationUrl = development ? null : `${base}/account.html?verify=${rawToken}`;
         try {
             await sendVerificationEmail(email, firstName, verificationUrl);
         } catch (error) {
-            await pool.query('delete from public.roar_customers where id=$1', [rows[0].id]);
+            await pool.query('delete from public.roar_customers where id=$1', [customerId]);
             throw error;
         }
-        const customer = rows[0];
+
         res.status(201).json({
             message: development ? 'Account created and signed in.' : 'Account created. Verify your email before signing in.',
             verificationUrl: development ? undefined : verificationUrl,
-            token: development ? signCustomer(customer) : undefined,
+            token: development ? signCustomer(insertRows[0]) : undefined,
             user: {
-                id: customer.id,
-                email: customer.email,
-                firstName: customer.first_name,
-                lastName: customer.last_name,
-                role: customer.role,
+                id: insertRows[0].id,
+                email: insertRows[0].email,
+                firstName: insertRows[0].first_name,
+                lastName: insertRows[0].last_name,
+                role: insertRows[0].role,
             },
         });
     } catch (error) {
-        if (error.code === '23505') return res.status(409).json({ message: 'An account with that email already exists.' });
+        if (error.code === '23505') {
+            try {
+                const { rows: existingRows } = await pool.query(
+                    'select id, email, first_name, last_name, role, email_verified, password_hash from public.roar_customers where email=$1 limit 1',
+                    [clean(req.body.email || '', 254).toLowerCase()]
+                );
+                const existing = existingRows[0];
+                if (existing) {
+                    if (existing.email_verified) {
+                        if (await bcrypt.compare(String(req.body.password || ''), existing.password_hash)) {
+                            const signedIn = { id: existing.id, email: existing.email, first_name: existing.first_name, last_name: existing.last_name, role: existing.role };
+                            return res.json({
+                                message: 'Signed in successfully.',
+                                token: signCustomer(signedIn),
+                                user: { id: signedIn.id, email: signedIn.email, firstName: signedIn.first_name, lastName: signedIn.last_name, role: signedIn.role },
+                            });
+                        }
+                        return res.status(409).json({ message: 'An account with that email already exists. Please sign in instead.' });
+                    }
+
+                    const development = process.env.NODE_ENV !== 'production';
+                    const passwordHash = await bcrypt.hash(String(req.body.password || ''), 12);
+                    const rawToken = crypto.randomBytes(32).toString('hex');
+                    const tokenHash = development ? null : crypto.createHash('sha256').update(rawToken).digest('hex');
+                    const expiresAt = development ? null : new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
+                    const { rows: updatedRows } = await pool.query(`
+                        update public.roar_customers
+                        set password_hash=$1, first_name=$2, last_name=$3, email_verified=$4,
+                            verification_token_hash=$5, verification_expires_at=$6, updated_at=now()
+                        where id=$7
+                        returning id, email, first_name, last_name, role, email_verified
+                    `, [passwordHash, clean(req.body.firstName, 80), clean(req.body.lastName, 80), development, tokenHash, expiresAt, existing.id]);
+                    const customer = updatedRows[0];
+
+                    const base = process.env.ROAR_CLIENT_URL || 'http://127.0.0.1:4173';
+                    const verificationUrl = development ? null : `${base}/account.html?verify=${rawToken}`;
+                    try {
+                        await sendVerificationEmail(customer.email, customer.first_name, verificationUrl);
+                    } catch (error) {
+                        console.error('Roar verification email failed for updated pending account:', error.message);
+                    }
+
+                    return res.status(200).json({
+                        message: development ? 'Account updated and signed in.' : 'Verification link resent. Please check your email.',
+                        verificationUrl: development ? undefined : verificationUrl,
+                        token: development ? signCustomer(customer) : undefined,
+                        user: { id: customer.id, email: customer.email, firstName: customer.first_name, lastName: customer.last_name, role: customer.role },
+                    });
+                }
+            } catch (inner) { console.error('Roar duplicate-account handling error:', inner.message); }
+        }
+        if (customerId) {
+            try { await pool.query('delete from public.roar_customers where id=$1', [customerId]); } catch {}
+        }
         console.error('Roar registration error:', error.message);
         res.status(500).json({ message: 'Unable to create account.' });
     }
