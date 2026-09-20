@@ -5,8 +5,6 @@ const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
 const { Pool } = require('pg');
-const nodemailer = require('nodemailer');
-
 const router = express.Router();
 const hasPgConfig = !!(process.env.DATABASE_URL || process.env.PGHOST);
 
@@ -198,11 +196,13 @@ function createJsonPool() {
     return { query, connect };
 }
 
-const pool = hasPgConfig ? new Pool({
+let pool = hasPgConfig ? new Pool({
     connectionString: process.env.DATABASE_URL || undefined,
     ssl: process.env.PGSSLMODE === 'require' || process.env.DATABASE_URL ? { rejectUnauthorized: false } : false,
     connectionTimeoutMillis: 10000,
 }) : createJsonPool();
+
+if (hasPgConfig) pool.on('error', (err) => console.error('[roar] PostgreSQL pool error:', err.message));
 
 const secret = process.env.ROAR_JWT_SECRET || process.env.JWT_SECRET || (!hasPgConfig ? 'dev-roar-secret-do-not-use-in-production' : undefined);
 const clean = (value, max = 500) => String(value ?? '').trim().slice(0, max);
@@ -228,28 +228,16 @@ const registerLimit = rateLimit(60 * 60 * 1000, 10);
 const loginLimit = rateLimit(15 * 60 * 1000, 20);
 const leadLimit = rateLimit(60 * 60 * 1000, 10);
 
-async function sendVerificationEmail(email, firstName, verificationUrl) {
-    if (process.env.NODE_ENV !== 'production') return;
-    const required = ['SMTP_HOST', 'SMTP_USER', 'SMTP_PASS', 'EMAIL_FROM'];
-    if (required.some(key => !process.env[key])) throw new Error('Verification email service is not configured');
-    const transport = nodemailer.createTransport({
-        host: process.env.SMTP_HOST,
-        port: Number(process.env.SMTP_PORT || 587),
-        secure: Number(process.env.SMTP_PORT) === 465,
-        auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
-    });
-    await transport.sendMail({
-        from: process.env.EMAIL_FROM,
-        to: email,
-        subject: 'Verify your Roar East Africa account',
-        text: `Hello ${firstName}, verify your account: ${verificationUrl}`,
-        html: `<p>Please verify your Roar East Africa account:</p><p><a href="${verificationUrl}">Verify my email</a></p><p>This link expires in 24 hours.</p>`,
-    });
-}
-
 async function init() {
     if (!hasPgConfig) {
         console.log('[roar] no PostgreSQL config — using local JSON storage for development');
+        return;
+    }
+    try {
+        await pool.query('select 1');
+    } catch (error) {
+        console.warn('[roar] PostgreSQL connection failed — falling back to local JSON storage:', error.message);
+        pool = createJsonPool();
         return;
     }
     await pool.query(`
@@ -329,8 +317,8 @@ function requireCustomer(req, res, next) {
 function requireRoarAdmin(req, res, next) {
     requireCustomer(req, res, async () => {
         try {
-            const { rows } = await pool.query('select role,email_verified from public.roar_customers where id=$1', [req.roarUser.id]);
-            if (rows[0]?.role !== 'admin' || !rows[0]?.email_verified) {
+            const { rows } = await pool.query('select role from public.roar_customers where id=$1', [req.roarUser.id]);
+            if (rows[0]?.role !== 'admin') {
                 return res.status(403).json({ message: 'Roar administrator access required.' });
             }
             next();
@@ -341,7 +329,6 @@ function requireRoarAdmin(req, res, next) {
 }
 
 router.post('/auth/register', registerLimit, async (req, res) => {
-    let customerId = null;
     try {
         const email = clean(req.body.email, 254).toLowerCase();
         const password = String(req.body.password || '');
@@ -350,112 +337,41 @@ router.post('/auth/register', registerLimit, async (req, res) => {
         if (!/^\S+@\S+\.\S+$/.test(email) || password.length < 10 || !firstName || !lastName) {
             return res.status(400).json({ message: 'Name, valid email, and a password of at least 10 characters are required.' });
         }
-        const development = process.env.NODE_ENV !== 'production';
         const passwordHash = await bcrypt.hash(password, 12);
-        const rawToken = crypto.randomBytes(32).toString('hex');
-        const tokenHash = development ? null : crypto.createHash('sha256').update(rawToken).digest('hex');
-        const expiresAt = development ? null : new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
-
         const { rows: insertRows } = await pool.query(`
             insert into public.roar_customers
-                (email, password_hash, first_name, last_name, email_verified, verification_token_hash, verification_expires_at)
-            values ($1,$2,$3,$4,$5,$6,$7)
+                (email, password_hash, first_name, last_name, email_verified)
+            values ($1,$2,$3,$4,true)
             returning id, email, first_name, last_name, role, email_verified
-        `, [email, passwordHash, firstName, lastName, development, tokenHash, expiresAt]);
-        customerId = insertRows[0].id;
-
-        const base = process.env.ROAR_CLIENT_URL || 'http://127.0.0.1:4173';
-        const verificationUrl = development ? null : `${base}/account.html?verify=${rawToken}`;
-        try {
-            await sendVerificationEmail(email, firstName, verificationUrl);
-        } catch (error) {
-            await pool.query('delete from public.roar_customers where id=$1', [customerId]);
-            throw error;
-        }
-
+        `, [email, passwordHash, firstName, lastName]);
+        const customer = insertRows[0];
         res.status(201).json({
-            message: development ? 'Account created and signed in.' : 'Account created. Verify your email before signing in.',
-            verificationUrl: development ? undefined : verificationUrl,
-            token: development ? signCustomer(insertRows[0]) : undefined,
-            user: {
-                id: insertRows[0].id,
-                email: insertRows[0].email,
-                firstName: insertRows[0].first_name,
-                lastName: insertRows[0].last_name,
-                role: insertRows[0].role,
-            },
+            message: 'Account created and signed in.',
+            token: signCustomer(customer),
+            user: { id: customer.id, email: customer.email, firstName: customer.first_name, lastName: customer.last_name, role: customer.role },
         });
     } catch (error) {
         if (error.code === '23505') {
             try {
                 const { rows: existingRows } = await pool.query(
-                    'select id, email, first_name, last_name, role, email_verified, password_hash from public.roar_customers where email=$1 limit 1',
+                    'select id, email, first_name, last_name, role, password_hash from public.roar_customers where email=$1 limit 1',
                     [clean(req.body.email || '', 254).toLowerCase()]
                 );
                 const existing = existingRows[0];
-                if (existing) {
-                    if (existing.email_verified) {
-                        if (await bcrypt.compare(String(req.body.password || ''), existing.password_hash)) {
-                            const signedIn = { id: existing.id, email: existing.email, first_name: existing.first_name, last_name: existing.last_name, role: existing.role };
-                            return res.json({
-                                message: 'Signed in successfully.',
-                                token: signCustomer(signedIn),
-                                user: { id: signedIn.id, email: signedIn.email, firstName: signedIn.first_name, lastName: signedIn.last_name, role: signedIn.role },
-                            });
-                        }
-                        return res.status(409).json({ message: 'An account with that email already exists. Please sign in instead.' });
-                    }
-
-                    const development = process.env.NODE_ENV !== 'production';
-                    const passwordHash = await bcrypt.hash(String(req.body.password || ''), 12);
-                    const rawToken = crypto.randomBytes(32).toString('hex');
-                    const tokenHash = development ? null : crypto.createHash('sha256').update(rawToken).digest('hex');
-                    const expiresAt = development ? null : new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
-                    const { rows: updatedRows } = await pool.query(`
-                        update public.roar_customers
-                        set password_hash=$1, first_name=$2, last_name=$3, email_verified=$4,
-                            verification_token_hash=$5, verification_expires_at=$6, updated_at=now()
-                        where id=$7
-                        returning id, email, first_name, last_name, role, email_verified
-                    `, [passwordHash, clean(req.body.firstName, 80), clean(req.body.lastName, 80), development, tokenHash, expiresAt, existing.id]);
-                    const customer = updatedRows[0];
-
-                    const base = process.env.ROAR_CLIENT_URL || 'http://127.0.0.1:4173';
-                    const verificationUrl = development ? null : `${base}/account.html?verify=${rawToken}`;
-                    try {
-                        await sendVerificationEmail(customer.email, customer.first_name, verificationUrl);
-                    } catch (error) {
-                        console.error('Roar verification email failed for updated pending account:', error.message);
-                    }
-
-                    return res.status(200).json({
-                        message: development ? 'Account updated and signed in.' : 'Verification link resent. Please check your email.',
-                        verificationUrl: development ? undefined : verificationUrl,
-                        token: development ? signCustomer(customer) : undefined,
-                        user: { id: customer.id, email: customer.email, firstName: customer.first_name, lastName: customer.last_name, role: customer.role },
+                if (existing && await bcrypt.compare(String(req.body.password || ''), existing.password_hash)) {
+                    const signedIn = { id: existing.id, email: existing.email, first_name: existing.first_name, last_name: existing.last_name, role: existing.role };
+                    return res.json({
+                        message: 'Signed in successfully.',
+                        token: signCustomer(signedIn),
+                        user: { id: signedIn.id, email: signedIn.email, firstName: signedIn.first_name, lastName: signedIn.last_name, role: signedIn.role },
                     });
                 }
             } catch (inner) { console.error('Roar duplicate-account handling error:', inner.message); }
-        }
-        if (customerId) {
-            try { await pool.query('delete from public.roar_customers where id=$1', [customerId]); } catch {}
+            return res.status(409).json({ message: 'An account with that email already exists. Please sign in instead.' });
         }
         console.error('Roar registration error:', error.message);
         res.status(500).json({ message: 'Unable to create account.' });
     }
-});
-
-router.post('/auth/verify', async (req, res) => {
-    const rawToken = clean(req.body.token, 128);
-    const tokenHash = crypto.createHash('sha256').update(rawToken).digest('hex');
-    const { rows } = await pool.query(`
-        update public.roar_customers set email_verified=true, verification_token_hash=null,
-            verification_expires_at=null, updated_at=now()
-        where verification_token_hash=$1 and verification_expires_at > now()
-        returning id
-    `, [tokenHash]);
-    if (!rows.length) return res.status(400).json({ message: 'Verification link is invalid or expired.' });
-    res.json({ message: 'Email verified. You can now sign in.' });
 });
 
 router.post('/auth/login', loginLimit, async (req, res) => {
@@ -465,15 +381,14 @@ router.post('/auth/login', loginLimit, async (req, res) => {
     if (!customer || !await bcrypt.compare(String(req.body.password || ''), customer.password_hash)) {
         return res.status(401).json({ message: 'Invalid email or password.' });
     }
-    if (!customer.email_verified) return res.status(403).json({ message: 'Verify your email before signing in.' });
     res.json({ token: signCustomer(customer), user: { id: customer.id, email: customer.email, firstName: customer.first_name, lastName: customer.last_name, role: customer.role } });
 });
 
 router.get('/auth/me', requireCustomer, async (req, res) => {
-    const { rows } = await pool.query('select id,email,first_name,last_name,role,email_verified from public.roar_customers where id=$1', [req.roarUser.id]);
+    const { rows } = await pool.query('select id,email,first_name,last_name,role from public.roar_customers where id=$1', [req.roarUser.id]);
     if (!rows.length) return res.status(404).json({ message: 'Account not found.' });
     const u = rows[0];
-    res.json({ id:u.id, email:u.email, firstName:u.first_name, lastName:u.last_name, role:u.role, emailVerified:u.email_verified });
+    res.json({ id:u.id, email:u.email, firstName:u.first_name, lastName:u.last_name, role:u.role });
 });
 
 router.post('/leads', leadLimit, requireCustomer, async (req, res) => {
@@ -482,8 +397,8 @@ router.post('/leads', leadLimit, requireCustomer, async (req, res) => {
     if (!clientName || !Number.isInteger(totalGuests) || totalGuests < 1 || totalGuests > 30 || req.body.termsAccepted !== true) {
         return res.status(400).json({ message: 'Complete the required inquiry fields.' });
     }
-    const customerResult = await pool.query('select email,email_verified from public.roar_customers where id=$1', [req.roarUser.id]);
-    if (!customerResult.rows[0]?.email_verified) return res.status(403).json({ message: 'Verify your email before submitting an inquiry.' });
+    const customerResult = await pool.query('select email from public.roar_customers where id=$1', [req.roarUser.id]);
+    if (!customerResult.rows[0]) return res.status(404).json({ message: 'Account not found.' });
     const clientEmail = customerResult.rows[0].email;
     const { rows } = await pool.query(`
         insert into public.roar_leads
